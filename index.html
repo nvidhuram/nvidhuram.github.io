@@ -145,13 +145,13 @@
             color: var(--primary);
         }
 
-        /* Hero Section */
+        /* Hero Section - FIXED: Added more top padding */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 2rem;
+            padding: 6rem 2rem 2rem;
             text-align: center;
         }
 
@@ -160,11 +160,12 @@
             z-index: 1;
         }
 
+        /* Profile Image - FIXED: Added margin-top to clear navigation */
         .hero-image {
             width: 180px;
             height: 180px;
             border-radius: 50%;
-            margin: 0 auto 2rem;
+            margin: 2rem auto 2rem;
             border: 4px solid transparent;
             background: linear-gradient(var(--bg-dark), var(--bg-dark)) padding-box,
                         linear-gradient(135deg, var(--primary), var(--accent-purple)) border-box;
@@ -515,6 +516,16 @@
                 transform: translateY(0);
                 opacity: 1;
                 pointer-events: all;
+            }
+
+            .hero {
+                padding-top: 5rem;
+            }
+
+            .hero-image {
+                width: 150px;
+                height: 150px;
+                margin-top: 1rem;
             }
         }
     </style>
