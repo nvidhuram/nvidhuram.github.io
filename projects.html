@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects | Vidhuram N - Unity Developer</title>
+    <meta name="description" content="Portfolio of VR, WebXR, and Unity projects by Vidhuram N">
+    <style>
+        :root {
+            --primary: #00d9ff;
+            --primary-dark: #00a8cc;
+            --secondary: #ff006e;
+            --bg-dark: #0a0e27;
+            --bg-darker: #050814;
+            --bg-card: #1a1f3a;
+            --text-primary: #ffffff;
+            --text-secondary: #b8c5d6;
+            --text-muted: #6b7a99;
+            --accent-purple: #b026ff;
+            --accent-green: #00ff88;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.1) 0%, transparent 70%);
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Filter Buttons */
+        .filter-container {
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.5rem;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: var(--bg-dark);
+        }
+
+        /* Projects Section */
+        .projects-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 2rem 4rem;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 217, 255, 0.1);
+            position: relative;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent-purple));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(0, 217, 255, 0.2);
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(176, 38, 255, 0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .project-role {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .project-company {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: rgba(176, 38, 255, 0.2);
+            border-radius: 15px;
+            font-size: 0.85rem;
+            color: var(--accent-purple);
+            margin-bottom: 1rem;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .project-features {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .project-features li {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-features li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            padding: 0.3rem 0.8rem;
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--primary);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .project-link {
+            padding: 0.5rem 1rem;
+            background: rgba(0, 217, 255, 0.1);
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 217, 255, 0.3);
+        }
+
+        .project-link:hover {
+            background: var(--primary);
+            color: var(--bg-dark);
+        }
+
+        /* WebGL Build Container */
+        .webgl-container {
+            width: 100%;
+            height: 500px;
+            background: var(--bg-darker);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(0, 217, 255, 0.2);
+        }
+
+        .webgl-placeholder {
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .webgl-placeholder p {
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-darker);
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(0, 217, 255, 0.1);
+            margin-top: 4rem;
+        }
+
+        footer p {
+            color: var(--text-muted);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-link {
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Mobile menu toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(10, 14, 39, 0.98);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                pointer-events: none;
+                transition: all 0.3s ease;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: all;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">{'< Dev />'}</div>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>My Projects</h1>
+        <p>Explore my portfolio of VR simulations, WebXR experiences, and Unity applications</p>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="filter-container">
+        <button class="filter-btn active" onclick="filterProjects('all')">All Projects</button>
+        <button class="filter-btn" onclick="filterProjects('vr')">VR</button>
+        <button class="filter-btn" onclick="filterProjects('webxr')">WebXR</button>
+        <button class="filter-btn" onclick="filterProjects('unity')">Unity 3D</button>
+    </div>
+
+    <!-- Projects Section -->
+    <div class="projects-section">
+        <div class="projects-grid">
+            <!-- Project 1: VR Training Simulations -->
+            <div class="project-card" data-category="vr">
+                <div class="project-image">🥽</div>
+                <div class="project-content">
+                    <span class="project-company">InfiVR • 2024-Present</span>
+                    <h3 class="project-title">VR Training Simulations</h3>
+                    <p class="project-role">Unity Developer</p>
+                    <p class="project-description">Developed immersive VR and web-based training simulations for healthcare and industrial safety procedures with realistic physics-based interactions.</p>
+                    
+                    <ul class="project-features">
+                        <li>Basic Life Support (BLS) procedure training</li>
+                        <li>Infection Control protocols simulation</li>
+                        <li>Load Slinging safety training</li>
+                        <li>Lockout-Tagout (LOTO) procedures</li>
+                        <li>Physics-based interactions for realism</li>
+                        <li>Data integration for progress tracking</li>
+                    </ul>
+
+                    <div class="project-tags">
+                        <span class="tag">Unity</span>
+                        <span class="tag">VR</span>
+                        <span class="tag">Oculus SDK</span>
+                        <span class="tag">OpenXR</span>
+                        <span class="tag">C#</span>
+                        <span class="tag">Physics</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">GitHub</a>
+                        <a href="#" class="project-link">Demo Video</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2: 360° Framework -->
+            <div class="project-card" data-category="webxr">
+                <div class="project-image">🌐</div>
+                <div class="project-content">
+                    <span class="project-company">InfiVR • 2024</span>
+                    <h3 class="project-title">360° Experience Framework</h3>
+                    <p class="project-role">Framework Developer</p>
+                    <p class="project-description">Designed and implemented a reusable 360° experience framework for web deployment, significantly improving development and deployment efficiency.</p>
+                    
+                    <ul class="project-features">
+                        <li>Modular architecture for easy customization</li>
+                        <li>WebGL optimization for smooth performance</li>
+                        <li>Cross-platform compatibility</li>
+                        <li>Interactive hotspot system</li>
+                        <li>Scene transition management</li>
+                    </ul>
+
+                    <div class="webgl-container">
+                        <div class="webgl-placeholder">
+                            <p>🎮 WebGL Build Placeholder</p>
+                            <p style="font-size: 0.9rem;">Add your build to: builds/360-framework/index.html</p>
+                        </div>
+                    </div>
+
+                    <div class="project-tags">
+                        <span class="tag">Unity</span>
+                        <span class="tag">WebXR</span>
+                        <span class="tag">WebGL</span>
+                        <span class="tag">C#</span>
+                        <span class="tag">Framework</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">GitHub</a>
+                        <a href="builds/360-framework/index.html" class="project-link">Play WebGL</a>
+                        <a href="#" class="project-link">Documentation</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3: VR Architecture Framework -->
+            <div class="project-card" data-category="vr">
+                <div class="project-image">🏗️</div>
+                <div class="project-content">
+                    <span class="project-company">InfiVR • 2024</span>
+                    <h3 class="project-title">VR Framework Architecture</h3>
+                    <p class="project-role">VR Framework Developer</p>
+                    <p class="project-description">Contributed to the development of a scalable VR framework architecture that enhances reusability and maintainability across multiple VR projects.</p>
+                    
+                    <ul class="project-features">
+                        <li>Scalable component-based architecture</li>
+                        <li>Reusable VR interaction systems</li>
+                        <li>Performance optimization patterns</li>
+                        <li>Cross-device compatibility layer</li>
+                        <li>Event-driven communication system</li>
+                    </ul>
+
+                    <div class="project-tags">
+                        <span class="tag">Unity</span>
+                        <span class="tag">VR</span>
+                        <span class="tag">Architecture</span>
+                        <span class="tag">OpenXR</span>
+                        <span class="tag">Design Patterns</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">GitHub</a>
+                        <a href="#" class="project-link">Technical Doc</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4: VR Walkthroughs -->
+            <div class="project-card" data-category="vr unity">
+                <div class="project-image">🏨</div>
+                <div class="project-content">
+                    <span class="project-company">LifeVR • 2022-2024</span>
+                    <h3 class="project-title">VR Walkthroughs - Hotels & Industrial</h3>
+                    <p class="project-role">Lead Unity Developer</p>
+                    <p class="project-description">Created immersive VR walkthrough experiences for luxury hotels and industrial facilities with significant performance optimization through profiling and optimization techniques.</p>
+                    
+                    <ul class="project-features">
+                        <li>Photorealistic environment rendering</li>
+                        <li>Interactive navigation system</li>
+                        <li>20% performance improvement through profiling</li>
+                        <li>Multi-platform deployment (PC VR, Standalone VR)</li>
+                        <li>Real-time lighting optimization</li>
+                    </ul>
+
+                    <div class="webgl-container">
+                        <div class="webgl-placeholder">
+                            <p>🎮 WebGL Build Placeholder</p>
+                            <p style="font-size: 0.9rem;">Add your build to: builds/vr-walkthrough/index.html</p>
+                        </div>
+                    </div>
+
+                    <div class="project-tags">
+                        <span class="tag">Unity</span>
+                        <span class="tag">VR</span>
+                        <span class="tag">Optimization</span>
+                        <span class="tag">OpenXR</span>
+                        <span class="tag">WebGL</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">GitHub</a>
+                        <a href="builds/vr-walkthrough/index.html" class="project-link">Play WebGL</a>
+                        <a href="#" class="project-link">Case Study</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5: Multiplayer VR System -->
+            <div class="project-card" data-category="vr unity">
+                <div class="project-image">🌐🤝</div>
+                <div class="project-content">
+                    <span class="project-company">LifeVR • 2023</span>
+                    <h3 class="project-title">Multiplayer VR System</h3>
+                    <p class="project-role">Gameplay & Network Programmer</p>
+                    <p class="project-description">Integrated multiplayer functionality into VR experiences using Normcore, enabling collaborative training and shared virtual spaces.</p>
+                    
+                    <ul class="project-features">
+                        <li>Real-time player synchronization</li>
+                        <li>Voice chat integration</li>
+                        <li>Shared object manipulation</li>
+                        <li>Session management system</li>
+                        <li>Low-latency networking optimization</li>
+                    </ul>
+
+                    <div class="project-tags">
+                        <span class="tag">Unity</span>
+                        <span class="tag">VR</span>
+                        <span class="tag">Normcore</span>
+                        <span class="tag">Multiplayer</span>
+                        <span class="tag">Networking</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">GitHub</a>
+                        <a href="#" class="project-link">Demo Video</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6: Cloud-Integrated VR -->
+            <div class="project-card" data-category="vr unity">
+                <div class="project-image">☁️</div>
+                <div class="project-content">
+                    <span class="project-company">LifeVR • 2023</span>
+                    <h3 class="project-title">Cloud-Integrated VR Application</h3>
+                    <p class="project-role">Unity Developer</p>
+                    <p class="project-description">Integrated cloud services (AWS & Firebase) into VR applications for data persistence, user authentication, and analytics tracking.</p>
+                    
+                    <ul class="project-features">
+                        <li>Firebase authentication integration</li>
+                        <li>AWS S3 asset streaming</li>
+                        <li>Real-time database synchronization</li>
+                        <li>Analytics and user behavior tracking</li>
+                        <li>Secure data transmission</li>
+                    </ul>
+
+                    <div class="project-tags">
+                        <span class="tag">Unity</span>
+                        <span class="tag">VR</span>
+                        <span class="tag">Firebase</span>
+                        <span class="tag">AWS</span>
+                        <span class="tag">Cloud</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link">GitHub</a>
+                        <a href="#" class="project-link">Technical Doc</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://github.com/nvidhuram" class="social-link" title="GitHub" target="_blank" rel="noopener noreferrer">⚡</a>
+            <a href="https://linkedin.com/in/nvidhuram" class="social-link" title="LinkedIn" target="_blank" rel="noopener noreferrer">💼</a>
+            <a href="https://www.instagram.com/n.vidhuram" class="social-link" title="Instagram" target="_blank" rel="noopener noreferrer">📷</a>
+            <a href="mailto:nvidhuram@gmail.com" class="social-link" title="Email">✉️</a>
+        </div>
+        <p>&copy; 2025 Vidhuram N - Unity & VR Developer. Crafted with passion in Bengaluru.</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        function filterProjects(category) {
+            const cards = document.querySelectorAll('.project-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            // Update active button
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter cards
+            cards.forEach(card => {
+                if (category === 'all') {
+                    card.style.display = 'block';
+                } else {
+                    const cardCategory = card.getAttribute('data-category');
+                    if (cardCategory.includes(category)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('nav');
+            const navLinks = document.getElementById('navLinks');
+            
+            if (!nav.contains(event.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | Vidhuram N - Unity Developer</title>
+    <meta name="description" content="Learn more about Vidhuram N - Unity & VR Developer from Bengaluru">
+    <style>
+        :root {
+            --primary: #00d9ff;
+            --primary-dark: #00a8cc;
+            --secondary: #ff006e;
+            --bg-dark: #0a0e27;
+            --bg-darker: #050814;
+            --bg-card: #1a1f3a;
+            --text-primary: #ffffff;
+            --text-secondary: #b8c5d6;
+            --text-muted: #6b7a99;
+            --accent-purple: #b026ff;
+            --accent-green: #00ff88;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation (same as other pages) */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Content Section */
+        .about-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem 2rem 4rem;
+        }
+
+        .bio-section {
+            background: var(--bg-card);
+            padding: 2.5rem;
+            border-radius: 16px;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(0, 217, 255, 0.1);
+        }
+
+        .bio-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .bio-section p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        /* Experience Timeline */
+        .experience-section {
+            margin-bottom: 3rem;
+        }
+
+        .experience-section h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--primary), var(--accent-purple));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -3.5rem;
+            top: 0;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid var(--bg-dark);
+            box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.3);
+        }
+
+        .timeline-content {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 217, 255, 0.1);
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .timeline-title {
+            color: var(--primary);
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .timeline-date {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .timeline-company {
+            color: var(--accent-purple);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-content ul {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .timeline-content li {
+            color: var(--text-secondary);
+            padding-left: 1.5rem;
+            position: relative;
+            margin-bottom: 0.7rem;
+            font-size: 0.95rem;
+        }
+
+        .timeline-content li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        /* Skills Grid */
+        .skills-section {
+            margin-bottom: 3rem;
+        }
+
+        .skills-section h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 217, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .skill-category h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .skill-item {
+            color: var(--text-secondary);
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .skill-item::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* Education */
+        .education-section {
+            margin-bottom: 3rem;
+        }
+
+        .education-section h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .education-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 217, 255, 0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .education-card h3 {
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-card .degree {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .education-card .institution {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-darker);
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(0, 217, 255, 0.1);
+            margin-top: 4rem;
+        }
+
+        footer p {
+            color: var(--text-muted);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-link {
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        /* Mobile menu toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .timeline {
+                padding-left: 2rem;
+            }
+
+            .timeline-item::before {
+                left: -2.5rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(10, 14, 39, 0.98);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                pointer-events: none;
+                transition: all 0.3s ease;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            .timeline-header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">{'< Dev />'}</div>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>About Me</h1>
+    </div>
+
+    <!-- About Content -->
+    <div class="about-content">
+        <!-- Bio Section -->
+        <div class="bio-section">
+            <h2>👋 Hello, I'm Vidhuram</h2>
+            <p>I'm a passionate Unity Developer based in Bengaluru with ~4 years of experience creating immersive Virtual Reality (VR), WebXR, and 3D applications. My journey in game development combines technical excellence with creative problem-solving, specializing in training simulations and interactive experiences.</p>
+            
+            <p>My expertise spans across building VR training simulations for healthcare and industrial sectors, developing reusable frameworks for 360° experiences, and optimizing performance for both VR and web-based deployments. I thrive on tackling complex challenges, from physics-based interactions to multiplayer networking and cloud integration.</p>
+            
+            <p>When I'm not coding, you'll find me exploring the outdoors on my motorcycle, trekking through scenic landscapes, or diving into the latest games for inspiration. I believe the best games and VR experiences come from developers who understand both technology and user experience deeply.</p>
+        </div>
+
+        <!-- Experience Timeline -->
+        <div class="experience-section">
+            <h2>💼 Professional Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <div class="timeline-title">Unity Developer</div>
+                            <div class="timeline-date">Jun 2024 – Present</div>
+                        </div>
+                        <div class="timeline-company">InfiVR, Bengaluru</div>
+                        <ul>
+                            <li>Built VR and web-based simulations for Basic Life Support, Infection Control, Load Slinging, and Lockout-Tagout procedures</li>
+                            <li>Designed a 360° experience framework for web, improving deployment efficiency</li>
+                            <li>Contributed to VR framework architecture, enhancing scalability and reusability</li>
+                            <li>Managed web module hosting & deployment to ensure performance and reliability</li>
+                            <li>Implemented physics-based interactions and data integration for realistic training</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <div class="timeline-title">Unity Developer</div>
+                            <div class="timeline-date">May 2022 – May 2024</div>
+                        </div>
+                        <div class="timeline-company">LifeVR, Bengaluru</div>
+                        <ul>
+                            <li>Developed VR walkthroughs for luxury hotels and industrial facilities, improving client visualization and decision-making</li>
+                            <li>Optimized VR experiences using Profiler and best practices, achieving 20% faster rendering</li>
+                            <li>Integrated multiplayer features using Normcore for real-time collaboration</li>
+                            <li>Implemented cloud services (AWS, Firebase) for secure data storage and retrieval</li>
+                            <li>Collaborated with designers and clients to deliver polished, high-impact VR solutions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <div class="timeline-title">Unity Intern</div>
+                            <div class="timeline-date">Jan 2022 – Apr 2022</div>
+                        </div>
+                        <div class="timeline-company">LifeVR, Bengaluru</div>
+                        <ul>
+                            <li>Learned Unity3D, C#, and VR development fundamentals</li>
+                            <li>Built prototypes and assisted in developing VR walkthroughs</li>
+                            <li>Gained hands-on experience with Oculus SDK and optimization techniques</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills Grid -->
+        <div class="skills-section">
+            <h2>🛠️ Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>🎮 Game Development</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">Unity Engine (2D/3D)</div>
+                        <div class="skill-item">C# Programming</div>
+                        <div class="skill-item">Game Architecture & Design Patterns</div>
+                        <div class="skill-item">Physics & Animation Systems</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>🥽 VR/XR Development</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">Oculus SDK & OpenXR</div>
+                        <div class="skill-item">SteamVR</div>
+                        <div class="skill-item">VR Optimization</div>
+                        <div class="skill-item">Hand Tracking</div>
+                        <div class="skill-item">Physics-based Interactions</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>🌐 Web & Frameworks</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">WebXR & WebGL</div>
+                        <div class="skill-item">360° Experience Frameworks</div>
+                        <div class="skill-item">Web Module Hosting</div>
+                        <div class="skill-item">Performance Profiling</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>🌐 Networking</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">Normcore Multiplayer</div>
+                        <div class="skill-item">Real-time Synchronization</div>
+                        <div class="skill-item">Network Optimization</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>☁️ Cloud & Backend</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">Firebase Integration</div>
+                        <div class="skill-item">AWS Services</div>
+                        <div class="skill-item">Data Management</div>
+                        <div class="skill-item">RESTful APIs</div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>⚡ Tools & Optimization</h3>
+                    <div class="skill-list">
+                        <div class="skill-item">Visual Studio</div>
+                        <div class="skill-item">Git/GitHub</div>
+                        <div class="skill-item">Unity Profiler</div>
+                        <div class="skill-item">Performance Optimization</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Education -->
+        <div class="education-section">
+            <h2>🎓 Education</h2>
+            <div class="education-card">
+                <h3>2018 – 2022</h3>
+                <div class="degree">Bachelor of Engineering in Computer Science</div>
+                <div class="institution">Bangalore Institute of Technology, Bengaluru</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://github.com/nvidhuram" class="social-link" title="GitHub" target="_blank" rel="noopener noreferrer">⚡</a>
+            <a href="https://linkedin.com/in/nvidhuram" class="social-link" title="LinkedIn" target="_blank" rel="noopener noreferrer">💼</a>
+            <a href="https://instagram.com/n.vidhuram" class="social-link" title="Instagram" target="_blank" rel="noopener noreferrer">📷</a>
+            <a href="mailto:nvidhuram@gmail.com" class="social-link" title="Email">✉️</a>
+        </div>
+        <p>&copy; 2025 Vidhuram N - Unity & VR Developer. Crafted with passion in Bengaluru.</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('nav');
+            const navLinks = document.getElementById('navLinks');
+            
+            if (!nav.contains(event.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
