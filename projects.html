@@ -212,7 +212,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3rem;
+            font-size: 4rem;
             border-bottom: 1px solid rgba(0, 217, 255, 0.1);
         }
 
@@ -273,7 +273,6 @@
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
-            margin-bottom: 1rem;
         }
 
         .tag {
@@ -283,50 +282,6 @@
             border-radius: 20px;
             font-size: 0.85rem;
             color: var(--primary);
-        }
-
-        .project-links {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .project-link {
-            padding: 0.5rem 1rem;
-            background: rgba(0, 217, 255, 0.1);
-            color: var(--primary);
-            text-decoration: none;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0, 217, 255, 0.3);
-        }
-
-        .project-link:hover {
-            background: var(--primary);
-            color: var(--bg-dark);
-        }
-
-        /* WebGL Build Container */
-        .webgl-container {
-            width: 100%;
-            height: 500px;
-            background: var(--bg-darker);
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(0, 217, 255, 0.2);
-        }
-
-        .webgl-placeholder {
-            text-align: center;
-            color: var(--text-muted);
-        }
-
-        .webgl-placeholder p {
-            margin-bottom: 1rem;
         }
 
         /* Footer */
@@ -457,7 +412,7 @@
         <div class="projects-grid">
             <!-- Project 1: VR Training Simulations -->
             <div class="project-card" data-category="vr">
-                <div class="project-image">🥽</div>
+                <div class="project-image">🏥</div>
                 <div class="project-content">
                     <span class="project-company">InfiVR • 2024-Present</span>
                     <h3 class="project-title">VR Training Simulations</h3>
@@ -481,10 +436,6 @@
                         <span class="tag">C#</span>
                         <span class="tag">Physics</span>
                     </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link">GitHub</a>
-                        <a href="#" class="project-link">Demo Video</a>
-                    </div>
                 </div>
             </div>
 
@@ -505,24 +456,12 @@
                         <li>Scene transition management</li>
                     </ul>
 
-                    <div class="webgl-container">
-                        <div class="webgl-placeholder">
-                            <p>🎮 WebGL Build Placeholder</p>
-                            <p style="font-size: 0.9rem;">Add your build to: builds/360-framework/index.html</p>
-                        </div>
-                    </div>
-
                     <div class="project-tags">
                         <span class="tag">Unity</span>
                         <span class="tag">WebXR</span>
                         <span class="tag">WebGL</span>
                         <span class="tag">C#</span>
                         <span class="tag">Framework</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link">GitHub</a>
-                        <a href="builds/360-framework/index.html" class="project-link">Play WebGL</a>
-                        <a href="#" class="project-link">Documentation</a>
                     </div>
                 </div>
             </div>
@@ -551,10 +490,6 @@
                         <span class="tag">OpenXR</span>
                         <span class="tag">Design Patterns</span>
                     </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link">GitHub</a>
-                        <a href="#" class="project-link">Technical Doc</a>
-                    </div>
                 </div>
             </div>
 
@@ -562,7 +497,7 @@
             <div class="project-card" data-category="vr unity">
                 <div class="project-image">🏨</div>
                 <div class="project-content">
-                    <span class="project-company">LifeVR • 2022-2024</span>
+                    <span class="project-company">LifeVR • 2023-2024</span>
                     <h3 class="project-title">VR Walkthroughs - Hotels & Industrial</h3>
                     <p class="project-role">Lead Unity Developer</p>
                     <p class="project-description">Created immersive VR walkthrough experiences for luxury hotels and industrial facilities with significant performance optimization through profiling and optimization techniques.</p>
@@ -575,13 +510,6 @@
                         <li>Real-time lighting optimization</li>
                     </ul>
 
-                    <div class="webgl-container">
-                        <div class="webgl-placeholder">
-                            <p>🎮 WebGL Build Placeholder</p>
-                            <p style="font-size: 0.9rem;">Add your build to: builds/vr-walkthrough/index.html</p>
-                        </div>
-                    </div>
-
                     <div class="project-tags">
                         <span class="tag">Unity</span>
                         <span class="tag">VR</span>
@@ -589,72 +517,59 @@
                         <span class="tag">OpenXR</span>
                         <span class="tag">WebGL</span>
                     </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link">GitHub</a>
-                        <a href="builds/vr-walkthrough/index.html" class="project-link">Play WebGL</a>
-                        <a href="#" class="project-link">Case Study</a>
-                    </div>
                 </div>
             </div>
 
-            <!-- Project 5: Multiplayer VR System -->
-            <div class="project-card" data-category="vr unity">
-                <div class="project-image">🌐🤝</div>
-                <div class="project-content">
-                    <span class="project-company">LifeVR • 2023</span>
-                    <h3 class="project-title">Multiplayer VR System</h3>
-                    <p class="project-role">Gameplay & Network Programmer</p>
-                    <p class="project-description">Integrated multiplayer functionality into VR experiences using Normcore, enabling collaborative training and shared virtual spaces.</p>
-                    
-                    <ul class="project-features">
-                        <li>Real-time player synchronization</li>
-                        <li>Voice chat integration</li>
-                        <li>Shared object manipulation</li>
-                        <li>Session management system</li>
-                        <li>Low-latency networking optimization</li>
-                    </ul>
-
-                    <div class="project-tags">
-                        <span class="tag">Unity</span>
-                        <span class="tag">VR</span>
-                        <span class="tag">Normcore</span>
-                        <span class="tag">Multiplayer</span>
-                        <span class="tag">Networking</span>
-                    </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link">GitHub</a>
-                        <a href="#" class="project-link">Demo Video</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 6: Cloud-Integrated VR -->
+            <!-- Project 5: Cloud-Integrated VR -->
             <div class="project-card" data-category="vr unity">
                 <div class="project-image">☁️</div>
                 <div class="project-content">
-                    <span class="project-company">LifeVR • 2023</span>
-                    <h3 class="project-title">Cloud-Integrated VR Application</h3>
-                    <p class="project-role">Unity Developer</p>
-                    <p class="project-description">Integrated cloud services (AWS & Firebase) into VR applications for data persistence, user authentication, and analytics tracking.</p>
+                    <span class="project-company">ManasVR Labs • 2021-2022</span>
+                    <h3 class="project-title">VR/AR Applications & Cloud Integration</h3>
+                    <p class="project-role">Software Developer</p>
+                    <p class="project-description">Built VR/AR applications and interactive games with cloud services integration for data persistence, user authentication, and seamless user experiences.</p>
                     
                     <ul class="project-features">
-                        <li>Firebase authentication integration</li>
-                        <li>AWS S3 asset streaming</li>
-                        <li>Real-time database synchronization</li>
-                        <li>Analytics and user behavior tracking</li>
-                        <li>Secure data transmission</li>
+                        <li>VR/AR interactive games development</li>
+                        <li>UI/UX workflow design for immersive experiences</li>
+                        <li>Cloud services integration (authentication & databases)</li>
+                        <li>Performance optimization and debugging</li>
+                        <li>Cross-platform compatibility</li>
                     </ul>
 
                     <div class="project-tags">
                         <span class="tag">Unity</span>
-                        <span class="tag">VR</span>
-                        <span class="tag">Firebase</span>
-                        <span class="tag">AWS</span>
+                        <span class="tag">VR/AR</span>
                         <span class="tag">Cloud</span>
+                        <span class="tag">UI/UX</span>
+                        <span class="tag">C#</span>
                     </div>
-                    <div class="project-links">
-                        <a href="#" class="project-link">GitHub</a>
-                        <a href="#" class="project-link">Technical Doc</a>
+                </div>
+            </div>
+
+            <!-- Project 6: QA Automation & Testing -->
+            <div class="project-card" data-category="unity">
+                <div class="project-image">🧪</div>
+                <div class="project-content">
+                    <span class="project-company">EY - GDS • 2022-2023</span>
+                    <h3 class="project-title">QA Automation & Cloud Testing</h3>
+                    <p class="project-role">Associate Software Engineer (QA)</p>
+                    <p class="project-description">Conducted comprehensive functional and report testing for tax validation and PowerBI dashboards, while automating test processes and supporting Azure cloud QA projects.</p>
+                    
+                    <ul class="project-features">
+                        <li>Functional & report testing (Tax Form Validator, PowerBI)</li>
+                        <li>Test automation using Selenium-Java</li>
+                        <li>Azure cloud QA project support</li>
+                        <li>System reliability improvement with Pester Testing</li>
+                        <li>Agile methodology implementation</li>
+                    </ul>
+
+                    <div class="project-tags">
+                        <span class="tag">Selenium</span>
+                        <span class="tag">Java</span>
+                        <span class="tag">Azure</span>
+                        <span class="tag">QA Testing</span>
+                        <span class="tag">Agile</span>
                     </div>
                 </div>
             </div>
