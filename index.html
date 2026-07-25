@@ -1,718 +1,1778 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vidhuram N - Unity & VR Developer Portfolio</title>
-    <meta name="description" content="Portfolio of Vidhuram N - Unity & VR Developer specializing in immersive experiences">
-    <style>
-        :root {
-            --primary: #00d9ff;
-            --primary-dark: #00a8cc;
-            --secondary: #ff006e;
-            --bg-dark: #0a0e27;
-            --bg-darker: #050814;
-            --bg-card: #1a1f3a;
-            --text-primary: #ffffff;
-            --text-secondary: #b8c5d6;
-            --text-muted: #6b7a99;
-            --accent-purple: #b026ff;
-            --accent-green: #00ff88;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
-            color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Animated Background */
-        .bg-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .bg-animation::before,
-        .bg-animation::after {
-            content: '';
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.15;
-            animation: float 20s infinite ease-in-out;
-        }
-
-        .bg-animation::before {
-            width: 500px;
-            height: 500px;
-            background: var(--primary);
-            top: -200px;
-            left: -200px;
-            animation-delay: 0s;
-        }
-
-        .bg-animation::after {
-            width: 400px;
-            height: 400px;
-            background: var(--accent-purple);
-            bottom: -150px;
-            right: -150px;
-            animation-delay: 2s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(50px, -50px) scale(1.1); }
-            66% { transform: translate(-30px, 30px) scale(0.9); }
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(10, 14, 39, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            border-bottom: 1px solid rgba(0, 217, 255, 0.1);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, var(--primary), var(--accent-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-links a.active {
-            color: var(--primary);
-        }
-
-        /* Hero Section - FIXED: Added more top padding */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 6rem 2rem 2rem;
-            text-align: center;
-        }
-
-        .hero-content {
-            max-width: 900px;
-            z-index: 1;
-        }
-
-        /* Profile Image - FIXED: Added margin-top to clear navigation */
-        .hero-image {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            margin: 2rem auto 2rem;
-            border: 4px solid transparent;
-            background: linear-gradient(var(--bg-dark), var(--bg-dark)) padding-box,
-                        linear-gradient(135deg, var(--primary), var(--accent-purple)) border-box;
-            padding: 4px;
-            animation: pulse 3s infinite;
-        }
-
-        .hero-image img {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero .title {
-            font-size: 1.5rem;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-
-        .hero .subtitle {
-            font-size: 1.1rem;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-stats {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-text {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        .btn {
-            padding: 0.8rem 2rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--accent-purple));
-            color: var(--text-primary);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-        }
-
-        .btn-secondary:hover {
-            background: var(--primary);
-            color: var(--bg-dark);
-        }
-
-        /* Featured Projects Section */
-        .featured-projects {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            background: linear-gradient(135deg, var(--primary), var(--accent-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-        }
-
-        .project-card {
-            background: var(--bg-card);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0, 217, 255, 0.1);
-            position: relative;
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--accent-purple));
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 40px rgba(0, 217, 255, 0.2);
-        }
-
-        .project-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .project-icon {
-            padding: 2rem;
-            font-size: 4rem;
-            text-align: center;
-            background: linear-gradient(135deg, rgba(0, 217, 255, 0.05), rgba(176, 38, 255, 0.05));
-        }
-
-        .project-content {
-            padding: 1.5rem;
-        }
-
-        .project-title {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
-
-        .project-company {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
-        }
-
-        .project-description {
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-            font-size: 0.95rem;
-        }
-
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .tag {
-            padding: 0.3rem 0.8rem;
-            background: rgba(0, 217, 255, 0.1);
-            border: 1px solid rgba(0, 217, 255, 0.3);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: var(--primary);
-        }
-
-        /* Skills Preview */
-        .skills-preview {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .skill-card {
-            background: var(--bg-card);
-            padding: 2rem;
-            border-radius: 16px;
-            border: 1px solid rgba(0, 217, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .skill-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-        }
-
-        .skill-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .skill-title {
-            color: var(--primary);
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-
-        .skill-list {
-            list-style: none;
-        }
-
-        .skill-list li {
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-            padding-left: 1.5rem;
-            position: relative;
-        }
-
-        .skill-list li::before {
-            content: '▹';
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--bg-darker);
-            padding: 2rem;
-            text-align: center;
-            border-top: 1px solid rgba(0, 217, 255, 0.1);
-            margin-top: 4rem;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .social-link {
-            color: var(--text-secondary);
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .social-link:hover {
-            color: var(--primary);
-            transform: translateY(-3px);
-        }
-
-        footer p {
-            color: var(--text-muted);
-        }
-
-        /* Mobile menu toggle */
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            cursor: pointer;
-            gap: 4px;
-        }
-
-        .menu-toggle span {
-            width: 25px;
-            height: 3px;
-            background: var(--primary);
-            transition: all 0.3s ease;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero .title {
-                font-size: 1.2rem;
-            }
-
-            .hero-stats {
-                gap: 1.5rem;
-            }
-
-            .projects-grid,
-            .skills-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-links {
-                gap: 1rem;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .menu-toggle {
-                display: flex;
-            }
-
-            .nav-links {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: rgba(10, 14, 39, 0.98);
-                flex-direction: column;
-                padding: 2rem;
-                gap: 1rem;
-                transform: translateY(-100%);
-                opacity: 0;
-                pointer-events: none;
-                transition: all 0.3s ease;
-            }
-
-            .nav-links.active {
-                transform: translateY(0);
-                opacity: 1;
-                pointer-events: all;
-            }
-
-            .hero {
-                padding-top: 5rem;
-            }
-
-            .hero-image {
-                width: 150px;
-                height: 150px;
-                margin-top: 1rem;
-            }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vidhuram N — Unity / XR Developer</title>
+<meta name="description" content="Unity developer building AR, VR and WebXR training simulations. Five playable browser demos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='26' fill='%23151726'/><circle cx='50' cy='50' r='24' fill='none' stroke='%2322C6AC' stroke-width='7'/><circle cx='50' cy='50' r='10' fill='%23FF8261'/></svg>">
+<style>
+/* ============ tokens ============ */
+:root{
+  --bg:#12141F; --panel:#1A1D2B; --panel2:#222738; --rule:#2C3145;
+  --ink:#EDEFF7; --mut:#8B90A8;
+  --a1:#22C6AC; --a2:#7B8CFF; --a3:#FF8261; --a4:#F4C863;
+  --shadow:0 24px 60px -28px rgba(0,0,0,.7);
+  --glow:.5;
+  --display:"Fredoka",system-ui,sans-serif;
+  --body:"Nunito",system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --gut:clamp(20px,5vw,64px); --maxw:1240px;
+}
+:root[data-theme="light"]{
+  --bg:#F4F5FB; --panel:#FFFFFF; --panel2:#EEF0F8; --rule:#E2E5F0;
+  --ink:#232838; --mut:#6E7488;
+  --a1:#12A48C; --a2:#5C67E8; --a3:#EE6A45; --a4:#C99328;
+  --shadow:0 22px 50px -30px rgba(60,70,120,.35);
+  --glow:.32;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:var(--body);font-size:16px;line-height:1.62;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  transition:background .5s ease,color .5s ease;
+}
+body.booting{overflow:hidden}
+img,canvas{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--a2);outline-offset:3px;border-radius:6px}
+::selection{background:var(--a2);color:#fff}
+
+/* ambient aurora + faint grid */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(var(--rule) 1px,transparent 1px),linear-gradient(90deg,var(--rule) 1px,transparent 1px);
+  background-size:72px 72px;opacity:.28;
+  mask-image:radial-gradient(ellipse 85% 65% at 50% 0%,#000 0%,transparent 76%);
+  -webkit-mask-image:radial-gradient(ellipse 85% 65% at 50% 0%,#000 0%,transparent 76%);
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(38vw 38vw at 12% 8%,color-mix(in srgb,var(--a1) 100%,transparent) 0%,transparent 60%),
+    radial-gradient(42vw 42vw at 88% 14%,color-mix(in srgb,var(--a2) 100%,transparent) 0%,transparent 62%),
+    radial-gradient(46vw 40vw at 72% 96%,color-mix(in srgb,var(--a3) 100%,transparent) 0%,transparent 64%);
+  opacity:var(--glow);filter:blur(30px);transition:opacity .5s;
+}
+.wrap{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:0 var(--gut)}
+
+/* ============ boot ============ */
+#boot{position:fixed;inset:0;z-index:999;background:var(--bg);display:grid;place-content:center;gap:20px;justify-items:center;transition:opacity .5s,visibility .5s}
+#boot.done{opacity:0;visibility:hidden}
+.boot-mark{width:56px;height:56px;animation:spin 3s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.boot-bar{width:min(240px,60vw);height:3px;background:var(--rule);border-radius:99px;overflow:hidden}
+.boot-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--a1),var(--a2),var(--a3));transition:width .18s linear}
+.boot-txt{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+
+/* ============ HUD ============ */
+.hud{position:fixed;top:0;left:0;right:0;z-index:80;border-bottom:1px solid transparent;transition:background .3s,border-color .3s,backdrop-filter .3s}
+.hud.stuck{background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(16px);border-bottom-color:var(--rule)}
+.hud-in{max-width:var(--maxw);margin:0 auto;padding:12px var(--gut);display:flex;align-items:center;gap:18px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;font-family:var(--display);font-weight:600;letter-spacing:.01em}
+.brand svg{width:26px;height:26px;flex:none}
+.brand span{font-size:16px}
+.nav{display:flex;gap:4px;margin-left:auto}
+.nav a{text-decoration:none;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);padding:8px 12px;border-radius:99px;transition:color .2s,background .2s}
+.nav a:hover{color:var(--ink);background:var(--panel)}
+.nav a.on{color:#fff;background:var(--a2)}
+.hud-meta{display:flex;align-items:center;gap:9px}
+.fps{font-family:var(--mono);font-size:11px;color:var(--mut);min-width:70px;text-align:right;letter-spacing:.05em}
+.fps b{color:var(--a1);font-weight:500}
+.icobtn{background:var(--panel);border:1px solid var(--rule);border-radius:99px;width:34px;height:34px;display:grid;place-items:center;color:var(--mut);transition:.2s}
+.icobtn:hover{color:var(--ink);border-color:var(--a2)}
+.icobtn svg{width:16px;height:16px}
+.snd.on{color:var(--a1);border-color:var(--a1)}
+[data-theme="dark"] .theme .i-moon{display:none}
+[data-theme="light"] .theme .i-sun{display:none}
+.progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--a1),var(--a2),var(--a3));z-index:81;transition:width .1s linear}
+@media(max-width:900px){.nav{display:none}.fps{display:none}}
+
+/* ============ type ============ */
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);display:flex;align-items:center;gap:10px;margin:0 0 20px}
+.eyebrow::before{content:"";width:26px;height:2px;border-radius:2px;background:var(--a1);flex:none}
+h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.04;letter-spacing:-.01em;margin:0}
+h2{font-size:clamp(30px,5.2vw,56px);font-weight:600}
+h3{font-size:21px;font-weight:600;line-height:1.2}
+.lede{color:var(--mut);font-size:clamp(15px,1.6vw,18px);max-width:62ch}
+section{position:relative;padding:clamp(70px,11vw,138px) 0}
+
+/* ============ hero ============ */
+.hero{padding:0;height:100svh;min-height:600px;display:grid;grid-template-rows:1fr auto;position:relative}
+#stage{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.hero-copy{position:relative;z-index:2;align-self:center;pointer-events:none}
+.hero-copy .wrap{display:grid;gap:16px}
+.hero h1{font-size:clamp(40px,11vw,128px);line-height:1;font-weight:600;letter-spacing:-.02em;white-space:nowrap}
+.hero h1 .ln{display:block;overflow:hidden}
+.hero h1 .ln i{display:block;font-style:normal;transform:translateY(106%);transition:transform .95s cubic-bezier(.16,1,.3,1);background:linear-gradient(104deg,var(--a1),var(--a2) 52%,var(--a3));-webkit-background-clip:text;background-clip:text;color:transparent}
+.ready .hero h1 .ln i{transform:none}
+.hero .role{font-family:var(--mono);font-size:clamp(11px,1.5vw,13px);letter-spacing:.22em;text-transform:uppercase;color:var(--a1);opacity:0;transform:translateY(12px);transition:.8s cubic-bezier(.16,1,.3,1) .3s}
+.hero .blurb{max-width:47ch;color:var(--mut);opacity:0;transform:translateY(12px);transition:.8s cubic-bezier(.16,1,.3,1) .42s;font-weight:500}
+.ready .hero .role,.ready .hero .blurb{opacity:1;transform:none}
+.hero-foot{position:relative;z-index:2;padding-bottom:22px;pointer-events:none}
+.hero-foot .wrap{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.hint{font-family:var(--mono);font-size:11px;color:var(--mut);letter-spacing:.06em;display:flex;align-items:center;gap:9px}
+.dot{width:6px;height:6px;border-radius:99px;background:var(--a1);animation:blip 1.9s infinite}
+@keyframes blip{0%,100%{opacity:1}50%{opacity:.25}}
+.scrollcue{writing-mode:vertical-rl;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mut);display:flex;align-items:center;gap:10px}
+.scrollcue::after{content:"";width:2px;height:44px;border-radius:2px;background:linear-gradient(var(--a2),transparent);animation:drip 2s infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}55%{transform:scaleY(1);transform-origin:top}56%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ============ reveal ============ */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.rv.in{opacity:1;transform:none}
+
+/* ============ stats ============ */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--rule);border-radius:20px;overflow:hidden;background:var(--panel);box-shadow:var(--shadow)}
+.stat{padding:26px 24px;border-right:1px solid var(--rule)}
+.stat:last-child{border-right:0}
+.stat b{display:block;font-family:var(--display);font-size:clamp(32px,4.8vw,52px);font-weight:600;line-height:1;background:linear-gradient(120deg,var(--a1),var(--a2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
+@media(max-width:760px){.stats{grid-template-columns:1fr 1fr}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--rule)}}
+
+/* ============ arcade ============ */
+.arcade-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:44px}
+.games{display:grid;gap:28px}
+.game{border:1px solid var(--rule);border-radius:22px;background:var(--panel);overflow:hidden;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);box-shadow:var(--shadow)}
+.game:nth-child(even) .g-side{order:-1}
+@media(max-width:920px){.game{grid-template-columns:1fr}.game:nth-child(even) .g-side{order:0}}
+.g-side{padding:clamp(22px,3vw,36px);display:flex;flex-direction:column;gap:14px;border-right:1px solid var(--rule)}
+@media(max-width:920px){.g-side{border-right:0;border-bottom:1px solid var(--rule)}}
+.g-tag{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--a3)}
+.g-desc{color:var(--mut);font-size:15px;margin:0;font-weight:500}
+.g-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:10px}
+.chip{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;padding:5px 10px;border:1px solid var(--rule);border-radius:99px;color:var(--mut)}
+.g-stage{position:relative;background:var(--bg);display:flex;flex-direction:column}
+.g-bar{display:flex;align-items:center;gap:12px;padding:10px 15px;border-bottom:1px solid var(--rule);font-family:var(--mono);font-size:11px;color:var(--mut);letter-spacing:.05em}
+.g-bar .lamp{width:7px;height:7px;border-radius:99px;background:var(--rule);flex:none;transition:background .3s}
+.g-bar.live .lamp{background:var(--a1);box-shadow:0 0 9px var(--a1)}
+.g-score{margin-left:auto;color:var(--ink)}
+.g-canvas-hold{position:relative;flex:1;min-height:0}
+.g-canvas-hold canvas{width:100%;height:auto;touch-action:none;background:var(--bg)}
+.g-overlay{position:absolute;inset:0;display:grid;place-content:center;gap:12px;justify-items:center;text-align:center;background:color-mix(in srgb,var(--bg) 84%,transparent);backdrop-filter:blur(3px);padding:22px;transition:opacity .3s,visibility .3s}
+.g-overlay.hide{opacity:0;visibility:hidden}
+.g-overlay p{margin:0;color:var(--mut);font-size:14px;max-width:36ch;font-weight:500}
+.g-overlay .res{font-family:var(--display);font-size:30px;font-weight:600}
+.btn{background:linear-gradient(120deg,var(--a1),var(--a2));color:#fff;border:0;border-radius:99px;padding:12px 24px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;transition:transform .18s cubic-bezier(.16,1,.3,1),box-shadow .18s;box-shadow:0 8px 22px -10px var(--a2)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px -12px var(--a2)}
+.keys{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.key{font-family:var(--mono);font-size:10px;border:1px solid var(--rule);border-bottom-width:2px;border-radius:6px;padding:3px 8px;color:var(--mut)}
+
+/* on-screen controls */
+.controls{display:flex;gap:18px;align-items:center;justify-content:center;flex-wrap:wrap;padding:14px;border-top:1px solid var(--rule)}
+.pad,.dpad{display:grid;grid-template-columns:repeat(3,42px);grid-template-rows:repeat(2,42px);gap:6px}
+.dpad{display:none}
+.dpad.show{display:grid}
+.pad button,.dpad button{background:var(--panel2);border:1px solid var(--rule);border-radius:11px;color:var(--ink);font-size:15px;display:grid;place-items:center;transition:.12s}
+.pad button:active,.dpad button:active{background:var(--a2);color:#fff;transform:scale(.95)}
+.pad .sp,.dpad .sp{visibility:hidden}
+.acts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.act{padding:10px 18px;border-radius:12px;border:1px solid var(--rule);background:var(--panel2);color:var(--ink);font-family:var(--mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;font-weight:500;transition:.16s}
+.act:hover{border-color:var(--a1);color:var(--a1)}
+.act:active{transform:scale(.96)}
+.act.hot{border-color:var(--a3);color:var(--a3)}
+@media(hover:none){.dpad{}}
+
+/* ============ timeline ============ */
+.tl{display:grid;gap:0;border-top:1px solid var(--rule)}
+.job{display:grid;grid-template-columns:210px minmax(0,1fr);gap:clamp(16px,4vw,48px);padding:34px 0;border-bottom:1px solid var(--rule)}
+@media(max-width:760px){.job{grid-template-columns:1fr;gap:14px}}
+.job-when{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:var(--mut);display:flex;flex-direction:column;gap:5px}
+.job-when b{color:var(--a2);font-weight:500}
+.job h3{margin-bottom:4px}
+.job .co{font-family:var(--mono);font-size:12px;color:var(--a3);letter-spacing:.05em;margin:0 0 12px}
+.job ul{margin:0;padding-left:17px;color:var(--mut);font-size:15px;display:grid;gap:6px;font-weight:500}
+.job li::marker{color:var(--a1)}
+
+/* ============ stack ============ */
+.stack{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:20px;overflow:hidden;box-shadow:var(--shadow)}
+.cell{background:var(--panel);padding:24px}
+.cell h3{font-size:12px;font-family:var(--mono);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--a2);margin-bottom:13px}
+.cell ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px}
+.cell li{font-size:13px;color:var(--mut);border:1px solid var(--rule);border-radius:99px;padding:4px 11px;transition:.2s;font-weight:600}
+.cell li:hover{color:var(--ink);border-color:var(--a1)}
+.marq{overflow:hidden;border-block:1px solid var(--rule);padding:18px 0;margin-top:52px;display:flex;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marq div{display:flex;padding-right:34px;flex:none;animation:slide 34s linear infinite}
+.marq span{font-family:var(--display);font-size:clamp(20px,3vw,32px);font-weight:500;color:var(--mut);white-space:nowrap;display:flex;align-items:center;gap:34px;padding-left:34px}
+.marq span::after{content:"";width:7px;height:7px;border-radius:99px;background:var(--a3)}
+@keyframes slide{to{transform:translateX(-100%)}}
+
+/* ============ duo cards ============ */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vw,48px)}
+@media(max-width:820px){.duo{grid-template-columns:1fr}}
+.card{border:1px solid var(--rule);border-radius:20px;background:var(--panel);padding:28px;box-shadow:var(--shadow)}
+.card ul{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+.card li{display:flex;gap:11px;align-items:flex-start;color:var(--mut);font-size:15px;font-weight:500}
+.card li::before{content:"";width:7px;height:7px;border-radius:3px;background:var(--a1);margin-top:8px;flex:none;transform:rotate(45deg)}
+.card.ach li::before{background:var(--a3)}
+
+/* ============ contact ============ */
+.contact h2{font-size:clamp(38px,8.5vw,92px)}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+.links a{display:inline-flex;align-items:center;gap:9px;text-decoration:none;padding:13px 20px;border:1px solid var(--rule);border-radius:99px;font-family:var(--mono);font-size:12.5px;letter-spacing:.03em;transition:.22s cubic-bezier(.16,1,.3,1);background:var(--panel)}
+.links a:hover{border-color:var(--a2);color:var(--a2);transform:translateY(-2px)}
+.links a svg{width:16px;height:16px}
+footer{border-top:1px solid var(--rule);padding:28px 0}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--mut);letter-spacing:.05em}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  html{scroll-behavior:auto}
+  .rv{opacity:1;transform:none}
+}
+</style>
 </head>
-<body>
-    <div class="bg-animation"></div>
+<body class="booting">
 
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <div class="logo">{'< Dev />'}</div>
-            <div class="menu-toggle" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </div>
+<div id="boot">
+  <svg class="boot-mark" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="30" stroke="#22C6AC" stroke-width="8"/><circle cx="50" cy="20" r="7" fill="#FF8261"/></svg>
+  <div class="boot-bar"><i id="bootBar"></i></div>
+  <div class="boot-txt" id="bootTxt">Loading scene</div>
+</div>
+
+<div class="progress" id="prog"></div>
+
+<header class="hud" id="hud">
+  <div class="hud-in">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="30" stroke="var(--a1)" stroke-width="9"/><circle cx="50" cy="50" r="12" fill="var(--a3)"/></svg>
+      <span>Vidhuram N</span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="#arcade">Arcade</a>
+      <a href="#work">Work</a>
+      <a href="#stack">Stack</a>
+      <a href="#contact">Contact</a>
     </nav>
+    <div class="hud-meta">
+      <span class="fps" id="fps">&middot;</span>
+      <button class="icobtn theme" id="theme" title="Switch theme" aria-label="Switch light or dark theme">
+        <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="icobtn snd" id="snd" aria-pressed="false" title="Turn sound on">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M16 9a4 4 0 0 1 0 6"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-image">
-                <img src="images/profile.jpg" alt="Vidhuram N">
-            </div>
-            <h1>Vidhuram N</h1>
-            <p class="title">Unity Developer | VR & Web Experience Specialist</p>
-            <p class="subtitle">Passionate about creating immersive VR experiences and interactive 3D applications. Specializing in training simulations, reusable frameworks, and optimized VR/Web solutions.</p>
-            
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <div class="stat-icon">🎮</div>
-                    <div class="stat-text">Unity & VR</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon">🥽</div>
-                    <div class="stat-text">VR/XR Specialist</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon">🌐</div>
-                    <div class="stat-text">WebXR</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon">📍</div>
-                    <div class="stat-text">Bengaluru, India</div>
-                </div>
-            </div>
+<main id="top">
 
-            <div class="cta-buttons">
-                <a href="projects.html" class="btn btn-primary">View Projects</a>
-                <a href="resume/VIDHURAM-N.pdf" class="btn btn-secondary" download>Download Resume</a>
-            </div>
+  <!-- HERO -->
+  <section class="hero">
+    <canvas id="stage"></canvas>
+    <div class="hero-copy">
+      <div class="wrap">
+        <p class="role">Unity &middot; XR &middot; WebXR developer</p>
+        <h1><span class="ln"><i>Vidhuram N</i></span></h1>
+        <p class="blurb">Senior Unity developer building AR, VR and WebXR training that people actually finish, from CPR drills to lockout tagout and factory walkthroughs. Five plus years shipping to the Meta Horizon Store and the browser, across healthcare, heavy industry and hospitality.</p>
+      </div>
+    </div>
+    <div class="hero-foot">
+      <div class="wrap">
+        <span class="hint"><span class="dot"></span>Drag to orbit &middot; move to stir the field &middot; tap a shard</span>
+        <span class="scrollcue">Scroll</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section id="about">
+    <div class="wrap">
+      <p class="eyebrow rv">Build report</p>
+      <div class="stats rv">
+        <div class="stat"><b data-count="5" data-suffix="+">0</b><span>Years shipping XR</span></div>
+        <div class="stat"><b data-count="10" data-suffix="+">0</b><span>XR apps delivered</span></div>
+        <div class="stat"><b data-count="4" data-suffix="">0</b><span>Store platforms</span></div>
+        <div class="stat"><b data-count="20" data-suffix="%">0</b><span>Faster load times</span></div>
+      </div>
+      <p class="lede rv" style="margin-top:32px">I am a senior Unity developer with five plus years building immersive AR, VR and WebXR training for healthcare, industrial and hospitality clients. I work fluently across Unity3D, C#, Unity 6, OpenXR, the Oculus SDK and SteamVR, with real strengths in performance optimisation, multiplayer networking and cross platform deployment. I own the full delivery cycle from concept to release on the Meta Horizon Store and WebGL, and I move from single player Quest builds to Photon synced multiplayer sessions to browser based WebXR without losing polish. I work closely with designers, 3D artists and cross functional teams to ship user focused experiences on time.</p>
+    </div>
+  </section>
+
+  <!-- ARCADE -->
+  <section id="arcade">
+    <div class="wrap">
+      <div class="arcade-head">
+        <div class="rv">
+          <p class="eyebrow">Playable builds</p>
+          <h2>Seven projects.<br>Play them, don't read them.</h2>
         </div>
-    </section>
+        <p class="lede rv" style="max-width:34ch;margin:0">Each one is a browser sized cut of a real client project. Same mechanic, same problem, smaller scene. Hit play.</p>
+      </div>
 
-    <!-- Featured Projects -->
-    <section class="featured-projects">
-        <h2 class="section-title">Featured Projects</h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <div class="project-icon">🏥</div>
-                <div class="project-content">
-                    <h3 class="project-title">VR Training Simulations</h3>
-                    <p class="project-company">InfiVR • 2024-Present</p>
-                    <p class="project-description">Immersive VR and web-based training simulations for healthcare and industrial safety procedures with realistic physics-based interactions.</p>
-                    <div class="project-tags">
-                        <span class="tag">Unity</span>
-                        <span class="tag">VR</span>
-                        <span class="tag">OpenXR</span>
-                        <span class="tag">Physics</span>
-                    </div>
-                </div>
+      <div class="games">
+
+        <!-- 1 CPR -->
+        <article class="game rv">
+          <div class="g-side">
+            <span class="g-tag">Healthcare VR &middot; InfiVR</span>
+            <h3>Basic Life Support trainer</h3>
+            <p class="g-desc">The BLS module scores chest compression rhythm against the 110 bpm guideline. Miss the beat and the trainee gets corrected in headset. Here it is as a metronome you can fail.</p>
+            <div class="g-chips"><span class="chip">Unity</span><span class="chip">Quest</span><span class="chip">Haptics</span><span class="chip">Scoring logic</span></div>
+          </div>
+          <div class="g-stage">
+            <div class="g-bar" data-bar><span class="lamp"></span><span class="g-score" data-score>ready</span></div>
+            <div class="g-canvas-hold">
+              <canvas data-game="cpr"></canvas>
+              <div class="g-overlay" data-overlay>
+                <div class="res" data-res>Compression rhythm</div>
+                <p data-msg>Tap the ring exactly when it snaps to the guide. 20 compressions at 110 bpm.</p>
+                <div class="keys"><span class="key">Space</span><span class="key">or click</span></div>
+                <button class="btn" data-play>Start drill</button>
+              </div>
             </div>
+          </div>
+        </article>
 
-            <div class="project-card">
-                <div class="project-icon">🌐</div>
-                <div class="project-content">
-                    <h3 class="project-title">360° Experience Framework</h3>
-                    <p class="project-company">InfiVR • 2024</p>
-                    <p class="project-description">Reusable 360° experience framework for web deployment with modular architecture and WebGL optimization.</p>
-                    <div class="project-tags">
-                        <span class="tag">Unity</span>
-                        <span class="tag">WebXR</span>
-                        <span class="tag">WebGL</span>
-                        <span class="tag">Framework</span>
-                    </div>
-                </div>
+        <!-- 2 Infection control -->
+        <article class="game rv">
+          <div class="g-side">
+            <span class="g-tag">Healthcare VR &middot; InfiVR</span>
+            <h3>Infection control: donning order</h3>
+            <p class="g-desc">Before entering an isolation room, PPE goes on in a fixed safe order. The training module drills that sequence. Tap the steps in the correct order, wrong picks cost you.</p>
+            <div class="g-chips"><span class="chip">Unity</span><span class="chip">Sequence logic</span><span class="chip">Protocol</span><span class="chip">Feedback loop</span></div>
+          </div>
+          <div class="g-stage">
+            <div class="g-bar" data-bar><span class="lamp"></span><span class="g-score" data-score>ready</span></div>
+            <div class="g-canvas-hold">
+              <canvas data-game="ppe"></canvas>
+              <div class="g-overlay" data-overlay>
+                <div class="res" data-res>Donning order</div>
+                <p data-msg>Put PPE on in the safe order: clean hands, gown, mask, eye shield, gloves. Tap them in sequence.</p>
+                <div class="keys"><span class="key">Tap tiles</span></div>
+                <button class="btn" data-play>Enter anteroom</button>
+              </div>
             </div>
+          </div>
+        </article>
 
-            <div class="project-card">
-                <div class="project-icon">🏨</div>
-                <div class="project-content">
-                    <h3 class="project-title">VR Walkthroughs</h3>
-                    <p class="project-company">LifeVR • 2023-2024</p>
-                    <p class="project-description">Immersive VR walkthroughs for luxury hotels and industrial facilities with 20% performance improvement.</p>
-                    <div class="project-tags">
-                        <span class="tag">Unity</span>
-                        <span class="tag">VR</span>
-                        <span class="tag">Optimization</span>
-                        <span class="tag">OpenXR</span>
-                    </div>
-                </div>
+        <!-- 3 LOTO sweep -->
+        <article class="game rv">
+          <div class="g-side">
+            <span class="g-tag">Industrial safety &middot; InfiVR</span>
+            <h3>Lockout tagout hazard sweep</h3>
+            <p class="g-desc">LOTO training starts with spotting what is still energised. The real module drops you on a plant floor in 360 degrees. This one gives you a panorama and a stopwatch.</p>
+            <div class="g-chips"><span class="chip">WebXR</span><span class="chip">360 framework</span><span class="chip">Hotspots</span><span class="chip">Timed check</span></div>
+          </div>
+          <div class="g-stage">
+            <div class="g-bar" data-bar><span class="lamp"></span><span class="g-score" data-score>ready</span></div>
+            <div class="g-canvas-hold">
+              <canvas data-game="sweep"></canvas>
+              <div class="g-overlay" data-overlay>
+                <div class="res" data-res>Hazard sweep</div>
+                <p data-msg>Drag to pan the plant floor. Find all 5 live hazards before the clock runs out.</p>
+                <div class="keys"><span class="key">Drag</span><span class="key">&larr; &rarr;</span><span class="key">Click a hazard</span></div>
+                <button class="btn" data-play>Start sweep</button>
+              </div>
             </div>
-        </div>
-    </section>
+          </div>
+        </article>
 
-    <!-- Skills Preview -->
-    <section class="skills-preview">
-        <h2 class="section-title">Core Expertise</h2>
-        <div class="skills-grid">
-            <div class="skill-card">
-                <div class="skill-icon">🥽</div>
-                <h3 class="skill-title">VR/XR Development</h3>
-                <ul class="skill-list">
-                    <li>Oculus SDK & OpenXR</li>
-                    <li>SteamVR</li>
-                    <li>Physics-based Interactions</li>
-                    <li>VR Optimization</li>
-                </ul>
+        <!-- 4 Load slinging -->
+        <article class="game rv">
+          <div class="g-side">
+            <span class="g-tag">Industrial safety &middot; InfiVR</span>
+            <h3>Load slinging crane</h3>
+            <p class="g-desc">Load slinging is rigging and crane safety. Move the trolley, lower the hook, attach a load, then set it down on the matching pad without letting it swing wild. The sway is the skill.</p>
+            <div class="g-chips"><span class="chip">Unity</span><span class="chip">Rigging</span><span class="chip">Pendulum physics</span><span class="chip">Precision</span></div>
+          </div>
+          <div class="g-stage">
+            <div class="g-bar" data-bar><span class="lamp"></span><span class="g-score" data-score>ready</span></div>
+            <div class="g-canvas-hold">
+              <canvas data-game="sling"></canvas>
+              <div class="g-overlay" data-overlay>
+                <div class="res" data-res>Load slinging</div>
+                <p data-msg>Arrow keys move the trolley and hoist. Attach a crate, carry it to the matching pad, then detach to set it down.</p>
+                <div class="keys"><span class="key">&larr; &rarr;</span><span class="key">&uarr; &darr;</span><span class="key">E attach</span><span class="key">Q detach</span></div>
+                <button class="btn" data-play>Power up crane</button>
+              </div>
             </div>
-
-            <div class="skill-card">
-                <div class="skill-icon">🌐</div>
-                <h3 class="skill-title">Web & Frameworks</h3>
-                <ul class="skill-list">
-                    <li>WebXR & WebGL</li>
-                    <li>360° Frameworks</li>
-                    <li>Performance Profiling</li>
-                    <li>Web Deployment</li>
-                </ul>
+            <div class="controls" data-controls>
+              <div class="pad">
+                <button class="sp"></button><button data-dir="up" aria-label="Hoist up">&#9650;</button><button class="sp"></button>
+                <button data-dir="left" aria-label="Trolley left">&#9664;</button><button data-dir="down" aria-label="Hoist down">&#9660;</button><button data-dir="right" aria-label="Trolley right">&#9654;</button>
+              </div>
+              <div class="acts">
+                <button class="act" data-action="attach">Attach</button>
+                <button class="act" data-action="detach">Detach</button>
+              </div>
             </div>
+          </div>
+        </article>
 
-            <div class="skill-card">
-                <div class="skill-icon">🎮</div>
-                <h3 class="skill-title">Game Development</h3>
-                <ul class="skill-list">
-                    <li>Unity Engine</li>
-                    <li>C# Programming</li>
-                    <li>Design Patterns</li>
-                    <li>Asset Management</li>
-                </ul>
+        <!-- 5 AR visualiser -->
+        <article class="game rv">
+          <div class="g-side">
+            <span class="g-tag">AR visualiser &middot; InfiVR</span>
+            <h3>Equipment visualiser</h3>
+            <p class="g-desc">An AR app that lets a technician study a machine and see how it comes apart. Drag to orbit the unit in space, then explode it into its components and bring it back together.</p>
+            <div class="g-chips"><span class="chip">ARCore</span><span class="chip">Exploded view</span><span class="chip">3D assets</span><span class="chip">Spatial UI</span></div>
+          </div>
+          <div class="g-stage">
+            <div class="g-bar" data-bar><span class="lamp"></span><span class="g-score" data-score>assembled</span></div>
+            <div class="g-canvas-hold">
+              <canvas data-game="viz"></canvas>
+              <div class="g-overlay" data-overlay>
+                <div class="res" data-res>Equipment visualiser</div>
+                <p data-msg>Drag to orbit the unit. Use the button to explode it into parts and assemble it again. Tap a part to name it.</p>
+                <div class="keys"><span class="key">Drag to rotate</span><span class="key">Space to explode</span></div>
+                <button class="btn" data-play>Launch visualiser</button>
+              </div>
             </div>
-
-            <div class="skill-card">
-                <div class="skill-icon">☁️</div>
-                <h3 class="skill-title">Cloud & Testing</h3>
-                <ul class="skill-list">
-                    <li>Firebase & AWS</li>
-                    <li>Selenium Testing</li>
-                    <li>Azure Cloud QA</li>
-                    <li>Agile Methodology</li>
-                </ul>
+            <div class="controls" data-controls>
+              <div class="acts">
+                <button class="act" data-action="explode">Explode</button>
+                <button class="act" data-action="reset">Reset view</button>
+              </div>
             </div>
-        </div>
-    </section>
+          </div>
+        </article>
 
-    <!-- Footer -->
-    <footer>
-        <div class="social-links">
-            <a href="https://github.com/nvidhuram" class="social-link" title="GitHub" target="_blank" rel="noopener noreferrer">⚡</a>
-            <a href="https://linkedin.com/in/nvidhuram" class="social-link" title="LinkedIn" target="_blank" rel="noopener noreferrer">💼</a>
-            <a href="https://www.instagram.com/n.vidhuram" class="social-link" title="Instagram" target="_blank" rel="noopener noreferrer">📷</a>
-            <a href="mailto:nvidhuram@gmail.com" class="social-link" title="Email">✉️</a>
-        </div>
-        <p>&copy; 2025 Vidhuram N - Unity & VR Developer. Crafted with passion in Bengaluru.</p>
-    </footer>
+        <!-- 6 QA defect hunt -->
+        <article class="game rv">
+          <div class="g-side">
+            <span class="g-tag">Quality assurance &middot; EY GDS</span>
+            <h3>Tax validator: defect hunt</h3>
+            <p class="g-desc">My QA work at EY meant hunting defects in a Tax Form Validator and its reports. Here is that job in miniature: scan the records and click every cell that fails validation. Clean rows are decoys and false flags count against you.</p>
+            <div class="g-chips"><span class="chip">Functional QA</span><span class="chip">Selenium</span><span class="chip">Validation rules</span><span class="chip">Regression</span></div>
+          </div>
+          <div class="g-stage">
+            <div class="g-bar" data-bar><span class="lamp"></span><span class="g-score" data-score>ready</span></div>
+            <div class="g-canvas-hold">
+              <canvas data-game="qa"></canvas>
+              <div class="g-overlay" data-overlay>
+                <div class="res" data-res>Defect hunt</div>
+                <p data-msg>Five records fail validation. Click the exact cell that is wrong in each. Clean rows are decoys.</p>
+                <div class="keys"><span class="key">Click a cell</span></div>
+                <button class="btn" data-play>Open test run</button>
+              </div>
+            </div>
+          </div>
+        </article>
 
-    <script>
-        function toggleMenu() {
-            const navLinks = document.getElementById('navLinks');
-            navLinks.classList.toggle('active');
+        <!-- 7 Walkthrough -->
+        <article class="game rv">
+          <div class="g-side">
+            <span class="g-tag">Hospitality VR &middot; LifeVR</span>
+            <h3>Property walkthrough</h3>
+            <p class="g-desc">Luxury hotel and facility walkthroughs, where the job is teleport navigation that never disorients the guest. Top down here: find the three key rooms, then reach the exit.</p>
+            <div class="g-chips"><span class="chip">Navigation</span><span class="chip">Lightmapping</span><span class="chip">Mobile VR</span><span class="chip">WebGL</span></div>
+          </div>
+          <div class="g-stage">
+            <div class="g-bar" data-bar><span class="lamp"></span><span class="g-score" data-score>ready</span></div>
+            <div class="g-canvas-hold">
+              <canvas data-game="maze"></canvas>
+              <div class="g-overlay" data-overlay>
+                <div class="res" data-res>Property walkthrough</div>
+                <p data-msg>Collect all 3 marked rooms, then reach the blue exit. The floor plan is different every time.</p>
+                <div class="keys"><span class="key">W A S D</span><span class="key">or arrows</span></div>
+                <button class="btn" data-play>Enter property</button>
+              </div>
+            </div>
+            <div class="controls">
+              <div class="dpad" data-dpad>
+                <button class="sp"></button><button data-dir="up" aria-label="Up">&#9650;</button><button class="sp"></button>
+                <button data-dir="left" aria-label="Left">&#9664;</button><button data-dir="down" aria-label="Down">&#9660;</button><button data-dir="right" aria-label="Right">&#9654;</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="wrap">
+      <p class="eyebrow rv">Build history</p>
+      <h2 class="rv" style="margin-bottom:44px">Where the work shipped</h2>
+      <div class="tl">
+
+        <article class="job rv">
+          <div class="job-when"><b>Jun 2024 &ndash; Jun 2026</b><span>Bengaluru</span></div>
+          <div>
+            <h3>Unity Developer</h3>
+            <p class="co">InfiVR</p>
+            <ul>
+              <li>Built and maintained AR, VR and WebXR training apps in Unity3D and C# for healthcare and industrial clients: Basic Life Support, Infection Control, Load Slinging and Lockout Tagout.</li>
+              <li>Architected a reusable 360 degree web experience framework, sharply improving deployment efficiency across projects.</li>
+              <li>Migrated 3 or more VR training modules to WebXR, opening them up to any browser.</li>
+              <li>Published and maintained applications on the Meta Horizon Store, handling submission, review and updates.</li>
+              <li>Integrated REST APIs and contributed to multiplayer VR simulations with real time synchronisation.</li>
+              <li>Mentored 4 or more new developers and led client demos, requirement gathering and issue resolution.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="job rv">
+          <div class="job-when"><b>Sep 2023 &ndash; May 2024</b><span>Bengaluru</span></div>
+          <div>
+            <h3>Lead Unity Developer</h3>
+            <p class="co">LifeVR</p>
+            <ul>
+              <li>Sole Unity developer on end to end AR and VR delivery for industrial and hospitality clients.</li>
+              <li>Built VR apps for browsing 360 degree life event video with immersive UI workflows.</li>
+              <li>Created VR walkthroughs of luxury hotels and industrial facilities.</li>
+              <li>Spearheaded multiplayer VR collaboration features for team based sessions.</li>
+              <li>Cut app load times by 20 percent through profiling, mobile optimisation and rendering work.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="job rv">
+          <div class="job-when"><b>Feb 2022 &ndash; Sep 2023</b><span>Trivandrum</span></div>
+          <div>
+            <h3>Associate Software Engineer, QA</h3>
+            <p class="co">Ernst &amp; Young, GDS</p>
+            <ul>
+              <li>Functional and report testing for a Tax Form Validator and Power BI dashboards.</li>
+              <li>Automated test suites with Selenium and Java, improving coverage and reliability.</li>
+              <li>Supported Azure cloud QA projects using the Pester framework.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="job rv">
+          <div class="job-when"><b>Mar 2021 &ndash; Feb 2022</b><span>Thrissur</span></div>
+          <div>
+            <h3>Software Developer</h3>
+            <p class="co">ManasVR Labs</p>
+            <ul>
+              <li>Built VR and AR applications and interactive games in Unity3D with intuitive UI and UX workflows.</li>
+              <li>Handled backend work: cloud services, authentication and databases.</li>
+              <li>Improved application stability through systematic debugging and optimisation.</li>
+            </ul>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section id="stack">
+    <div class="wrap">
+      <p class="eyebrow rv">Toolchain</p>
+      <h2 class="rv" style="margin-bottom:44px">What I reach for</h2>
+      <div class="stack rv">
+        <div class="cell"><h3>Engine</h3><ul><li>Unity 6</li><li>Unity3D</li><li>C#</li><li>URP</li><li>Unity Profiler</li><li>Visual Scripting</li></ul></div>
+        <div class="cell"><h3>XR</h3><ul><li>OpenXR</li><li>Oculus SDK</li><li>SteamVR</li><li>Meta Quest</li><li>WebXR</li></ul></div>
+        <div class="cell"><h3>Networking</h3><ul><li>Photon</li><li>Real time sync</li><li>Multiplayer VR</li><li>REST APIs</li></ul></div>
+        <div class="cell"><h3>Performance</h3><ul><li>Profiling</li><li>Rendering opt.</li><li>Memory mgmt</li><li>Mobile opt.</li></ul></div>
+        <div class="cell"><h3>3D and UI</h3><ul><li>Asset integration</li><li>Animation</li><li>UI systems</li><li>Physics interactions</li></ul></div>
+        <div class="cell"><h3>Platforms</h3><ul><li>Meta Horizon Store</li><li>Android VR</li><li>WebGL</li><li>App Store</li><li>Play Store</li></ul></div>
+        <div class="cell"><h3>Cloud</h3><ul><li>Azure</li><li>AWS</li><li>GCP</li><li>Databases</li><li>Auth systems</li></ul></div>
+        <div class="cell"><h3>Tooling</h3><ul><li>Git</li><li>Postman</li><li>Selenium Java</li><li>Visual Studio</li></ul></div>
+      </div>
+
+      <div class="marq" aria-hidden="true"><div id="marqA"></div><div id="marqB"></div></div>
+    </div>
+  </section>
+
+  <!-- CREDENTIALS -->
+  <section id="creds">
+    <div class="wrap duo">
+      <div class="card rv">
+        <p class="eyebrow" style="margin-bottom:16px">Certifications</p>
+        <ul>
+          <li>AZ-900, Microsoft Azure Fundamentals</li>
+          <li>GCP, Architecting with Google Compute Engine</li>
+          <li>EY Innovation Bronze, Agile Methodology</li>
+          <li>Udemy, Unity Game Engine and C#</li>
+          <li>B.Tech Computer Science, Government Engineering College Wayanad, 2016 to 2020</li>
+        </ul>
+      </div>
+      <div class="card ach rv">
+        <p class="eyebrow" style="margin-bottom:16px">Highlights</p>
+        <ul>
+          <li>10 or more XR applications delivered for healthcare, industrial and hospitality clients.</li>
+          <li>Reusable 360 degree framework adopted across multiple customer deployments.</li>
+          <li>Shipped to Meta Horizon Store, WebGL, App Store and Play Store.</li>
+          <li>Contributed to multiplayer VR architecture on Photon.</li>
+          <li>Speaks English, Malayalam, Hindi and Tamil.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <p class="eyebrow rv">Open to work</p>
+      <h2 class="rv">Got a headset<br>and a problem?</h2>
+      <p class="lede rv" style="margin-top:22px">Based in Kochi, India and open to working anywhere, remote, hybrid or on site, with teams in any timezone. Send over the brief and I will tell you honestly whether XR is the right answer for it.</p>
+      <div class="links rv">
+        <a href="mailto:nvidhuram@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+          nvidhuram@gmail.com
+        </a>
+        <a href="tel:+918943414363">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+          +91 89434 14363
+        </a>
+        <a href="https://www.linkedin.com/in/nvidhuram" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05A4.2 4.2 0 0 1 16.6 8.7c4 0 4.7 2.6 4.7 6V21h-4v-5.5c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21H9z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 Vidhuram N</span>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   Vidhuram N — portfolio runtime  (vanilla JS, no deps)
+   ========================================================= */
+(function () {
+  'use strict';
+
+  var RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var root = document.documentElement;
+  var clamp = function (v, a, b) { return v < a ? a : v > b ? b : v; };
+  var lerp = function (a, b, t) { return a + (b - a) * t; };
+  var rand = function (a, b) { return a + Math.random() * (b - a); };
+
+  /* ---------------- palette (reads CSS vars, refreshed on theme flip) ---- */
+  var P = { bg: '#12141F', panel: '#1A1D2B', panel2: '#222738', rule: '#2C3145', ink: '#EDEFF7', mut: '#8B90A8', a1: '#22C6AC', a2: '#7B8CFF', a3: '#FF8261', a4: '#F4C863' };
+  function refreshPalette() {
+    var cs = getComputedStyle(root);
+    ['bg', 'panel', 'panel2', 'rule', 'ink', 'mut', 'a1', 'a2', 'a3', 'a4'].forEach(function (k) {
+      var v = cs.getPropertyValue('--' + k).trim();
+      if (v) P[k] = v;
+    });
+  }
+  var repaints = [];   // static game previews register here
+
+  /* ---------------- theme ---------------- */
+  (function () {
+    var btn = document.getElementById('theme');
+    var stored = null;
+    try { stored = localStorage.getItem('theme'); } catch (e) { }
+    var initial = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    setTheme(initial, false);
+    btn.addEventListener('click', function () {
+      setTheme(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light', true);
+    });
+    function setTheme(mode, persist) {
+      root.setAttribute('data-theme', mode);
+      btn.setAttribute('title', mode === 'light' ? 'Switch to dark' : 'Switch to light');
+      if (persist) { try { localStorage.setItem('theme', mode); } catch (e) { } }
+      requestAnimationFrame(function () {
+        refreshPalette();
+        repaints.forEach(function (fn) { try { fn(); } catch (e) { } });
+      });
+    }
+  })();
+  refreshPalette();
+
+  /* ---------------- audio ---------------- */
+  var SFX = {
+    on: false, ac: null,
+    boot: function () { if (!this.ac) { var C = window.AudioContext || window.webkitAudioContext; if (C) this.ac = new C(); } },
+    play: function (freq, dur, type, vol) {
+      if (!this.on) return; this.boot(); if (!this.ac) return;
+      if (this.ac.state === 'suspended') this.ac.resume();
+      var o = this.ac.createOscillator(), g = this.ac.createGain(), t = this.ac.currentTime;
+      o.type = type || 'sine'; o.frequency.setValueAtTime(freq, t);
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(vol || 0.13, t + 0.008);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + (dur || 0.12));
+      o.connect(g); g.connect(this.ac.destination); o.start(t); o.stop(t + (dur || 0.12) + 0.02);
+    }
+  };
+  var sndBtn = document.getElementById('snd');
+  sndBtn.addEventListener('click', function () {
+    SFX.on = !SFX.on; sndBtn.classList.toggle('on', SFX.on);
+    sndBtn.setAttribute('aria-pressed', String(SFX.on));
+    sndBtn.title = SFX.on ? 'Turn sound off' : 'Turn sound on';
+    if (SFX.on) { SFX.boot(); SFX.play(660, 0.09, 'triangle'); }
+  });
+
+  /* ---------------- boot ---------------- */
+  (function () {
+    var bar = document.getElementById('bootBar'), txt = document.getElementById('bootTxt'), boot = document.getElementById('boot');
+    var steps = ['Loading scene', 'Baking lightmaps', 'Compiling shaders', 'Ready'];
+    var p = 0, i = 0;
+    var tick = setInterval(function () {
+      p = Math.min(100, p + rand(11, 26));
+      bar.style.width = p + '%';
+      var ni = Math.min(steps.length - 1, Math.floor(p / 26));
+      if (ni !== i) { i = ni; txt.textContent = steps[i]; }
+      if (p >= 100) {
+        clearInterval(tick); txt.textContent = steps[steps.length - 1];
+        setTimeout(function () {
+          boot.classList.add('done');
+          document.body.classList.remove('booting');
+          document.body.classList.add('ready');
+        }, 260);
+      }
+    }, RM ? 40 : 190);
+  })();
+
+  /* ---------------- HUD / scroll / reveal / counters ---------------- */
+  var hud = document.getElementById('hud'), prog = document.getElementById('prog');
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('#nav a'));
+  function onScroll() {
+    var y = window.scrollY || 0, max = document.documentElement.scrollHeight - window.innerHeight;
+    prog.style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
+    hud.classList.toggle('stuck', y > 40);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  var revealIO = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); revealIO.unobserve(e.target); } });
+  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+  Array.prototype.forEach.call(document.querySelectorAll('section'), function (sec) {
+    Array.prototype.forEach.call(sec.querySelectorAll('.rv'), function (el, i) {
+      el.style.transitionDelay = (Math.min(i, 3) * 70) + 'ms'; revealIO.observe(el);
+    });
+  });
+
+  var secIO = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      navLinks.forEach(function (a) { a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id); });
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  ['arcade', 'work', 'stack', 'contact'].forEach(function (id) { var el = document.getElementById(id); if (el) secIO.observe(el); });
+
+  var countIO = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return; countIO.unobserve(e.target);
+      var el = e.target, to = +el.dataset.count, sfx = el.dataset.suffix || '', t0 = performance.now(), dur = 1100;
+      (function step(now) {
+        var k = clamp((now - t0) / dur, 0, 1), e2 = 1 - Math.pow(1 - k, 3);
+        el.textContent = Math.round(to * e2) + sfx;
+        if (k < 1) requestAnimationFrame(step);
+      })(t0);
+    });
+  }, { threshold: 0.6 });
+  Array.prototype.forEach.call(document.querySelectorAll('[data-count]'), function (el) { countIO.observe(el); });
+
+  (function () {
+    var words = ['Unity 6', 'OpenXR', 'C#', 'Photon', 'Meta Quest', 'WebXR', 'URP', 'Oculus SDK', 'WebGL', 'SteamVR', 'Profiler'];
+    var html = words.map(function (w) { return '<span>' + w + '</span>'; }).join('');
+    document.getElementById('marqA').innerHTML = html;
+    document.getElementById('marqB').innerHTML = html;
+  })();
+
+  (function () {
+    var el = document.getElementById('fps'), frames = 0, last = performance.now();
+    (function loop(now) {
+      frames++;
+      if (now - last >= 500) { el.innerHTML = '<b>' + Math.round(frames * 1000 / (now - last)) + '</b> fps'; frames = 0; last = now; }
+      requestAnimationFrame(loop);
+    })(last);
+  })();
+
+  /* =========================================================
+     shared tiny 3D core
+     ========================================================= */
+  function rotX(p, a) { var c = Math.cos(a), s = Math.sin(a); return [p[0], p[1] * c - p[2] * s, p[1] * s + p[2] * c]; }
+  function rotY(p, a) { var c = Math.cos(a), s = Math.sin(a); return [p[0] * c + p[2] * s, p[1], -p[0] * s + p[2] * c]; }
+  function rotZ(p, a) { var c = Math.cos(a), s = Math.sin(a); return [p[0] * c - p[1] * s, p[0] * s + p[1] * c, p[2]]; }
+
+  function cubeMesh() {
+    var v = [[-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1], [-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1]];
+    var e = [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]];
+    return { v: v, e: e };
+  }
+  function octaMesh() {
+    var v = [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]];
+    var e = [];
+    for (var i = 0; i < v.length; i++) for (var j = i + 1; j < v.length; j++) {
+      var d = Math.hypot(v[i][0] - v[j][0], v[i][1] - v[j][1], v[i][2] - v[j][2]);
+      if (Math.abs(d - Math.SQRT2) < 0.05) e.push([i, j]);
+    }
+    return { v: v, e: e };
+  }
+  function icoMesh() {
+    var g = 1.618033988;
+    var v = [[0, 1, g], [0, 1, -g], [0, -1, g], [0, -1, -g], [1, g, 0], [-1, g, 0], [1, -g, 0], [-1, -g, 0], [g, 0, 1], [g, 0, -1], [-g, 0, 1], [-g, 0, -1]];
+    var e = [];
+    for (var i = 0; i < v.length; i++) for (var j = i + 1; j < v.length; j++) {
+      var d = Math.hypot(v[i][0] - v[j][0], v[i][1] - v[j][1], v[i][2] - v[j][2]);
+      if (Math.abs(d - 2) < 0.05) e.push([i, j]);
+    }
+    return { v: v, e: e };
+  }
+
+  /* =========================================================
+     HERO — interactive floating geometry field
+     ========================================================= */
+  (function () {
+    var cv = document.getElementById('stage'); if (!cv) return;
+    var ctx = cv.getContext('2d');
+    var W = 0, H = 0, dpr = 1, F = 560, CAMD = 10.5;
+    var yaw = 0.5, pitch = -0.12, tYaw = 0.5, tPitch = -0.12;
+    var down = false, dragging = false, px = 0, py = 0, movedD = 0, lastInput = 0;
+    var beac = { x: 0, y: 0, tx: 0, ty: 0, has: false };
+
+    function resize() {
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      W = cv.clientWidth; H = cv.clientHeight;
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      F = clamp(W * 0.7, 360, 720);
+      beac.x = beac.tx = W / 2; beac.y = beac.ty = H / 2;
+    }
+    window.addEventListener('resize', resize);
+
+    function cam(p) {
+      var q = rotY(p, yaw); q = rotX(q, pitch);
+      var z = q[2] + CAMD; if (z < 0.4) return null;
+      var s = F / z;
+      return { x: W / 2 + q[0] * s, y: H * 0.5 - q[1] * s, z: z, s: s };
+    }
+
+    var ico = icoMesh(), cube = cubeMesh(), octa = octaMesh();
+    var accents = [P.a1, P.a2, P.a3, P.a4];
+
+    // orbiting shards
+    var shards = [];
+    for (var i = 0; i < 9; i++) {
+      shards.push({
+        mesh: i % 2 ? cube : octa,
+        r: rand(2.6, 4.4), speed: rand(0.12, 0.32) * (Math.random() < 0.5 ? 1 : -1),
+        phase: rand(0, Math.PI * 2), tilt: rand(-0.7, 0.7), bob: rand(0.1, 0.35),
+        scale: rand(0.22, 0.42), sr: rand(0.4, 1.1), spin: rand(0, 6), ai: i % 4,
+        hot: 0
+      });
+    }
+    // decorative rings
+    var rings = [];
+    for (var r = 0; r < 2; r++) {
+      var pts = []; var N = 48, rad = 4.9 + r * 0.9;
+      for (var k = 0; k < N; k++) { var a = k / N * Math.PI * 2; pts.push([Math.cos(a) * rad, 0, Math.sin(a) * rad]); }
+      rings.push({ pts: pts, tilt: r ? 1.1 : 0.4, roll: r ? 0.6 : -0.3, spin: rand(0, 6), sr: r ? 0.08 : -0.06 });
+    }
+    // ambient particles
+    var motes = [];
+    for (var m = 0; m < 46; m++) motes.push({ p: [rand(-5, 5), rand(-3.5, 3.5), rand(-5, 5)], s: rand(0.5, 1.6) });
+
+    function drawMesh(mesh, pos, spin, scale, col, alpha, lw) {
+      var sc = [];
+      for (var i = 0; i < mesh.v.length; i++) {
+        var q = mesh.v[i];
+        q = rotY([q[0] * scale, q[1] * scale, q[2] * scale], spin);
+        q = rotX(q, spin * 0.6);
+        sc.push(cam([q[0] + pos[0], q[1] + pos[1], q[2] + pos[2]]));
+      }
+      ctx.strokeStyle = col; ctx.globalAlpha = alpha; ctx.lineWidth = lw || 1;
+      ctx.beginPath();
+      for (var e = 0; e < mesh.e.length; e++) {
+        var a = sc[mesh.e[e][0]], b = sc[mesh.e[e][1]]; if (!a || !b) continue;
+        ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+      }
+      ctx.stroke(); ctx.globalAlpha = 1;
+    }
+
+    var raf = 0;
+    function frame(now) {
+      raf = requestAnimationFrame(frame);
+      if (window.scrollY > window.innerHeight * 1.05) return;   // sleep off-screen
+      var t = now / 1000;
+      accents = [P.a1, P.a2, P.a3, P.a4];
+
+      if (!dragging && !RM) tYaw += 0.0016;
+      yaw = lerp(yaw, tYaw, 0.07); pitch = lerp(pitch, clamp(tPitch, -0.6, 0.55), 0.07);
+      beac.x = lerp(beac.x, beac.tx, 0.18); beac.y = lerp(beac.y, beac.ty, 0.18);
+
+      ctx.clearRect(0, 0, W, H);
+
+      // motes
+      for (var mo = 0; mo < motes.length; mo++) {
+        var sp = cam([motes[mo].p[0], motes[mo].p[1] + Math.sin(t * 0.4 + mo) * 0.12, motes[mo].p[2]]);
+        if (!sp) continue;
+        ctx.globalAlpha = clamp(0.35 - (sp.z - CAMD) * 0.03, 0.05, 0.32);
+        ctx.fillStyle = P.mut; ctx.fillRect(sp.x, sp.y, motes[mo].s, motes[mo].s);
+      }
+      ctx.globalAlpha = 1;
+
+      // rings
+      for (var ri = 0; ri < rings.length; ri++) {
+        var rg = rings[ri]; rg.spin += rg.sr * 0.016;
+        ctx.strokeStyle = ri ? P.a2 : P.a1; ctx.globalAlpha = 0.22; ctx.lineWidth = 1;
+        ctx.beginPath(); var started = false;
+        for (var pi = 0; pi <= rg.pts.length; pi++) {
+          var pt = rg.pts[pi % rg.pts.length];
+          var q = rotY(pt, rg.spin); q = rotZ(q, rg.roll); q = rotX(q, rg.tilt);
+          var s = cam(q);
+          if (!s) { started = false; continue; }
+          if (!started) { ctx.moveTo(s.x, s.y); started = true; } else ctx.lineTo(s.x, s.y);
         }
+        ctx.stroke(); ctx.globalAlpha = 1;
+      }
 
-        document.addEventListener('click', function(event) {
-            const nav = document.querySelector('nav');
-            const navLinks = document.getElementById('navLinks');
-            
-            if (!nav.contains(event.target)) {
-                navLinks.classList.remove('active');
+      // central icosahedron
+      drawMesh(ico, [0, 0.15, 0], t * 0.28, 1.35, P.a2, 0.7, 1.4);
+      drawMesh(ico, [0, 0.15, 0], t * 0.28 + 0.15, 1.05, P.a1, 0.4, 1);
+
+      // shards + beacon links
+      var links = [];
+      for (var si = 0; si < shards.length; si++) {
+        var sh = shards[si];
+        sh.spin += (sh.sr + sh.hot * 3) * 0.016;
+        sh.hot = Math.max(0, sh.hot - 0.016);
+        var a = t * sh.speed + sh.phase;
+        var base = rotX([Math.cos(a) * sh.r, Math.sin(t * 0.5 + si) * sh.bob, Math.sin(a) * sh.r], sh.tilt);
+        var cen = cam(base);
+        var col = accents[sh.ai];
+        var near = 0;
+        if (cen && beac.has) {
+          var d = Math.hypot(cen.x - beac.x, cen.y - beac.y);
+          if (d < 150) { near = 1 - d / 150; links.push({ x: cen.x, y: cen.y, k: near, col: col }); }
+        }
+        var al = 0.55 + near * 0.45 + sh.hot * 0.4;
+        drawMesh(sh.mesh, base, sh.spin, sh.scale * (1 + sh.hot * 0.5), col, clamp(al, 0, 1), 1.2 + near);
+        sh._cen = cen; // cache for hit test
+      }
+
+      // beacon connective lines
+      for (var li = 0; li < links.length; li++) {
+        ctx.strokeStyle = links[li].col; ctx.globalAlpha = links[li].k * 0.5; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(beac.x, beac.y); ctx.lineTo(links[li].x, links[li].y); ctx.stroke();
+      }
+      ctx.globalAlpha = 1;
+
+      // beacon
+      if (beac.has) {
+        var gr = ctx.createRadialGradient(beac.x, beac.y, 0, beac.x, beac.y, 46);
+        gr.addColorStop(0, P.a1); gr.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.globalAlpha = 0.28; ctx.fillStyle = gr;
+        ctx.beginPath(); ctx.arc(beac.x, beac.y, 46, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1;
+        ctx.fillStyle = P.a1; ctx.beginPath(); ctx.arc(beac.x, beac.y, 3, 0, Math.PI * 2); ctx.fill();
+      }
+
+      cv.style.opacity = String(clamp(1 - window.scrollY / (window.innerHeight * 0.85), 0, 1));
+    }
+    resize(); frame(performance.now());
+
+    function activate(x, y) {
+      var best = null, bd = 60;
+      for (var i = 0; i < shards.length; i++) {
+        var c = shards[i]._cen; if (!c) continue;
+        var d = Math.hypot(c.x - x, c.y - y);
+        if (d < bd) { bd = d; best = shards[i]; }
+      }
+      if (best) { best.hot = 1; SFX.play(360 + best.ai * 120, 0.14, 'triangle', 0.1); }
+    }
+
+    cv.addEventListener('pointerdown', function (e) {
+      down = true; dragging = false; movedD = 0; px = e.clientX; py = e.clientY;
+      beac.has = true; var r = cv.getBoundingClientRect(); beac.tx = e.clientX - r.left; beac.ty = e.clientY - r.top;
+      cv.setPointerCapture(e.pointerId);
+    });
+    cv.addEventListener('pointermove', function (e) {
+      var r = cv.getBoundingClientRect(); beac.has = true; beac.tx = e.clientX - r.left; beac.ty = e.clientY - r.top;
+      lastInput = performance.now();
+      if (!down) return;
+      var dx = e.clientX - px, dy = e.clientY - py; movedD += Math.abs(dx) + Math.abs(dy);
+      if (movedD > 6) dragging = true;
+      if (dragging) { tYaw += dx * 0.006; tPitch += dy * 0.004; cv.style.cursor = 'grabbing'; }
+      px = e.clientX; py = e.clientY;
+    });
+    function up(e) {
+      if (down && !dragging) { var r = cv.getBoundingClientRect(); activate(e.clientX - r.left, e.clientY - r.top); }
+      down = false; dragging = false; cv.style.cursor = 'grab';
+    }
+    cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+    cv.addEventListener('pointerleave', function () { if (!down) beac.has = false; });
+    cv.style.cursor = 'grab';
+  })();
+
+  /* =========================================================
+     GAME HOST
+     ========================================================= */
+  function fit(canvas, W, H) {
+    var dpr = Math.min(2, window.devicePixelRatio || 1);
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+    canvas.style.width = '100%'; canvas.style.height = 'auto';
+    var ctx = canvas.getContext('2d'); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return ctx;
+  }
+  function localPt(canvas, e, W, H) {
+    var r = canvas.getBoundingClientRect();
+    return { x: (e.clientX - r.left) * (W / r.width), y: (e.clientY - r.top) * (H / r.height) };
+  }
+  function mono(ctx, size, weight) { ctx.font = (weight || 500) + ' ' + size + 'px "JetBrains Mono", monospace'; }
+  function disp(ctx, size, weight) { ctx.font = (weight || 600) + ' ' + size + 'px "Fredoka", sans-serif'; }
+
+  var BUILDS = {};
+
+  function mount(article) {
+    var canvas = article.querySelector('canvas[data-game]');
+    var def = BUILDS[canvas.dataset.game]; if (!def) return;
+    var W = def.W, H = def.H, ctx = fit(canvas, W, H);
+    var overlay = article.querySelector('[data-overlay]');
+    var playBtn = article.querySelector('[data-play]');
+    var scoreEl = article.querySelector('[data-score]');
+    var barEl = article.querySelector('[data-bar]');
+    var resEl = article.querySelector('[data-res]');
+    var msgEl = article.querySelector('[data-msg]');
+    var dpad = article.querySelector('[data-dpad]');
+    var keys = {}, raf = 0, last = 0, running = false, inView = false;
+
+    var host = {
+      W: W, H: H, keys: keys, sfx: SFX,
+      score: function (s) { scoreEl.textContent = s; },
+      finish: function (title, msg, label) {
+        running = false; barEl.classList.remove('live');
+        resEl.textContent = title; msgEl.textContent = msg;
+        playBtn.textContent = label || 'Play again';
+        overlay.classList.remove('hide');
+      }
+    };
+    var game = def.make(ctx, W, H, host);
+
+    function loop(now) {
+      if (!running) return; raf = requestAnimationFrame(loop);
+      var dt = Math.min(0.05, (now - last) / 1000); last = now;
+      game.step(dt, now / 1000); game.draw(now / 1000);
+    }
+    function start() {
+      overlay.classList.add('hide'); barEl.classList.add('live');
+      if (dpad) dpad.classList.add('show');
+      game.reset(); running = true; last = performance.now(); raf = requestAnimationFrame(loop);
+    }
+    playBtn.addEventListener('click', start);
+
+    function fwd(name) {
+      return function (e) {
+        if (!game[name]) return;
+        var p = localPt(canvas, e, W, H);
+        game[name](p.x, p.y, e, running);
+        if (name === 'down' && running) e.preventDefault();
+      };
+    }
+    canvas.addEventListener('pointerdown', function (e) { canvas.setPointerCapture(e.pointerId); fwd('down')(e); });
+    canvas.addEventListener('pointermove', fwd('move'));
+    canvas.addEventListener('pointerup', fwd('up'));
+    canvas.addEventListener('pointercancel', fwd('up'));
+
+    window.addEventListener('keydown', function (e) {
+      if (!running || !inView) return;
+      keys[e.key.toLowerCase()] = true;
+      if ([' ', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].indexOf(e.key.toLowerCase()) > -1) e.preventDefault();
+      if (game.key) game.key(e.key.toLowerCase());
+    });
+    window.addEventListener('keyup', function (e) { keys[e.key.toLowerCase()] = false; });
+
+    // direction buttons (pad + dpad)
+    Array.prototype.forEach.call(article.querySelectorAll('[data-dir]'), function (b) {
+      var map = { up: 'arrowup', down: 'arrowdown', left: 'arrowleft', right: 'arrowright' };
+      var k = map[b.dataset.dir];
+      b.addEventListener('pointerdown', function (e) { e.preventDefault(); keys[k] = true; if (game.key) game.key(k); });
+      ['pointerup', 'pointerleave', 'pointercancel'].forEach(function (ev) { b.addEventListener(ev, function () { keys[k] = false; }); });
+    });
+    // action buttons
+    Array.prototype.forEach.call(article.querySelectorAll('[data-action]'), function (b) {
+      b.addEventListener('click', function () { if (game.action) game.action(b.dataset.action, b); });
+    });
+
+    new IntersectionObserver(function (es) {
+      inView = es[0].isIntersecting;
+      if (!inView && running) { running = false; cancelAnimationFrame(raf); barEl.classList.remove('live'); host.finish('Paused', 'Scrolled away mid run. Start again whenever.', 'Resume'); }
+    }, { threshold: 0.25 }).observe(canvas);
+
+    repaints.push(function () { if (!running) game.draw(performance.now() / 1000); });
+    game.reset(); game.draw(0);
+  }
+
+  /* helper: rounded rect */
+  function rr(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x - w / 2 + r, y - h / 2);
+    ctx.arcTo(x + w / 2, y - h / 2, x + w / 2, y + h / 2, r);
+    ctx.arcTo(x + w / 2, y + h / 2, x - w / 2, y + h / 2, r);
+    ctx.arcTo(x - w / 2, y + h / 2, x - w / 2, y - h / 2, r);
+    ctx.arcTo(x - w / 2, y - h / 2, x + w / 2, y - h / 2, r);
+    ctx.closePath();
+  }
+
+  /* =========================================================
+     1 — CPR rhythm
+     ========================================================= */
+  BUILDS.cpr = {
+    W: 640, H: 380,
+    make: function (ctx, W, H, host) {
+      var BPM = 110, IV = 60 / BPM, TOTAL = 20, LEAD = 1.6, s = {};
+      function reset() { s = { t: 0, next: 0, hits: [], flash: 0, grade: '', gradeT: 0, depth: 0, done: false, perfect: 0 }; host.score('0 / ' + TOTAL); }
+      function bt(i) { return LEAD + i * IV; }
+      function step(dt) {
+        s.t += dt; s.flash = Math.max(0, s.flash - dt * 4); s.gradeT = Math.max(0, s.gradeT - dt); s.depth = Math.max(0, s.depth - dt * 5);
+        while (s.next < TOTAL && s.t > bt(s.next) + 0.24) { s.hits.push({ i: s.next, d: 999 }); s.next++; }
+        if (s.next >= TOTAL && !s.done) {
+          s.done = true;
+          var good = 0, tot = 0;
+          for (var i = 0; i < s.hits.length; i++) if (s.hits[i].d < 0.24) { good++; tot += s.hits[i].d; }
+          var pct = Math.round(good / TOTAL * 100), avg = good ? Math.round(tot / good * 1000) : 0;
+          var v = pct >= 90 ? 'Certified' : pct >= 70 ? 'Passable' : pct >= 40 ? 'Needs practice' : 'Failed';
+          host.finish(pct + '% rhythm', v + '. ' + good + ' of ' + TOTAL + ' compressions in tolerance' + (good ? ', average offset ' + avg + ' ms.' : '.'), 'Run again');
+        }
+      }
+      function tap() {
+        if (s.next >= TOTAL) return;
+        var b = bt(s.next), d = Math.abs(s.t - b);
+        var prev = s.next > 0 ? Math.abs(s.t - bt(s.next - 1)) : 999;
+        if (prev < d && prev < 0.24) return;
+        if (d > 0.24) { s.grade = 'Off beat'; s.gradeT = 0.7; host.sfx.play(120, 0.1, 'square', 0.08); return; }
+        s.hits.push({ i: s.next, d: d }); s.next++; s.flash = 1; s.depth = 1;
+        s.grade = d < 0.06 ? 'Perfect' : d < 0.13 ? 'Good' : 'Shallow';
+        if (d < 0.06) s.perfect++;
+        s.gradeT = 0.6; host.sfx.play(d < 0.06 ? 880 : 520, 0.07, 'triangle', 0.1);
+        host.score(s.hits.length + ' / ' + TOTAL);
+      }
+      function draw() {
+        ctx.fillStyle = P.bg; ctx.fillRect(0, 0, W, H);
+        var cx = W / 2, cy = H / 2 - 6, R = 74;
+        ctx.strokeStyle = P.rule; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.ellipse(cx, cy + 14, 132, 96, 0, 0, Math.PI * 2); ctx.stroke();
+        ctx.beginPath(); ctx.arc(cx, cy - 104, 34, 0, Math.PI * 2); ctx.stroke();
+        if (s.next < TOTAL) {
+          var d = bt(s.next) - s.t;
+          if (d < IV * 1.05 && d > -0.24) {
+            var k = clamp(d / IV, 0, 1);
+            ctx.strokeStyle = P.a2; ctx.globalAlpha = clamp(1 - k * 0.5, 0.2, 1); ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.arc(cx, cy, R + k * 92, 0, Math.PI * 2); ctx.stroke(); ctx.globalAlpha = 1;
+          }
+        }
+        ctx.strokeStyle = s.flash > 0 ? P.a1 : P.mut; ctx.lineWidth = s.flash > 0 ? 3 : 1.5; ctx.globalAlpha = s.flash > 0 ? 1 : 0.6;
+        ctx.beginPath(); ctx.arc(cx, cy, R - s.depth * 7, 0, Math.PI * 2); ctx.stroke(); ctx.globalAlpha = 1;
+        ctx.fillStyle = s.flash > 0 ? 'rgba(34,198,172,.16)' : 'rgba(139,144,168,.08)';
+        ctx.beginPath(); ctx.arc(cx, cy, R - 14 - s.depth * 7, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = P.mut; mono(ctx, 10); ctx.textAlign = 'center'; ctx.fillText('110 BPM', cx, cy + 4);
+        if (s.gradeT > 0) {
+          ctx.globalAlpha = clamp(s.gradeT * 1.6, 0, 1);
+          ctx.fillStyle = s.grade === 'Perfect' ? P.a1 : s.grade === 'Good' ? P.a2 : P.a3;
+          disp(ctx, 24); ctx.fillText(s.grade, cx, cy - 96); ctx.globalAlpha = 1;
+        }
+        ctx.textAlign = 'left';
+        var bw = (W - 80) / TOTAL;
+        for (var i = 0; i < TOTAL; i++) {
+          var h = s.hits.filter(function (x) { return x.i === i; })[0];
+          ctx.fillStyle = !h ? P.rule : h.d > 0.24 ? P.a3 : h.d < 0.06 ? P.a1 : P.a2;
+          ctx.fillRect(40 + i * bw + 1, H - 34, bw - 3, 6);
+        }
+        ctx.fillStyle = P.mut; mono(ctx, 9); ctx.fillText('COMPRESSION LOG', 40, H - 44);
+        ctx.fillText(s.perfect + ' perfect', W - 108, H - 44);
+      }
+      return { reset: reset, step: step, draw: draw, down: function (x, y, e, r) { if (r) tap(); }, key: function (k) { if (k === ' ' || k === 'enter') tap(); } };
+    }
+  };
+
+  /* =========================================================
+     2 — Infection control: donning order
+     ========================================================= */
+  BUILDS.ppe = {
+    W: 640, H: 380,
+    make: function (ctx, W, H, host) {
+      var ORDER = ['Clean hands', 'Gown', 'Mask', 'Eye shield', 'Gloves'];
+      var s = {};
+      function layout() {
+        // two rows: 3 + 2, shuffled
+        var idx = [0, 1, 2, 3, 4];
+        for (var i = idx.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = idx[i]; idx[i] = idx[j]; idx[j] = t; }
+        var tiles = [];
+        var cw = 176, ch = 74, gapx = 22, gapy = 26;
+        var positions = [
+          [W / 2 - cw - gapx, 128], [W / 2, 128], [W / 2 + cw + gapx, 128],
+          [W / 2 - cw / 2 - gapx / 2, 128 + ch + gapy], [W / 2 + cw / 2 + gapx / 2, 128 + ch + gapy]
+        ];
+        for (var k = 0; k < 5; k++) tiles.push({ step: idx[k], x: positions[k][0], y: positions[k][1], w: cw, h: ch, done: false, flash: 0 });
+        return tiles;
+      }
+      function reset() { s = { tiles: layout(), next: 0, t: 0, miss: 0, missStep: 0, done: false }; host.score('step 1 / 5'); }
+      function step(dt) { s.t += dt; for (var i = 0; i < s.tiles.length; i++) s.tiles[i].flash = Math.max(0, s.tiles[i].flash - dt * 3); }
+      function pick(x, y) {
+        for (var i = 0; i < s.tiles.length; i++) {
+          var tl = s.tiles[i]; if (tl.done) continue;
+          if (Math.abs(x - tl.x) < tl.w / 2 && Math.abs(y - tl.y) < tl.h / 2) {
+            if (tl.step === s.next) {
+              tl.done = true; tl.flash = 0.01; s.next++; s.missStep = 0;
+              host.score('step ' + Math.min(s.next + 1, 5) + ' / 5');
+              host.sfx.play(520 + s.next * 90, 0.09, 'triangle', 0.1);
+              if (s.next === 5) host.finish(s.t.toFixed(1) + 's', s.miss === 0 ? 'Flawless donning order, zero errors.' : 'Complete with ' + s.miss + ' wrong pick' + (s.miss > 1 ? 's' : '') + '. The safe order is second nature with practice.', 'Run again');
+            } else {
+              tl.flash = 1; s.miss++; s.missStep++;
+              host.sfx.play(130, 0.1, 'square', 0.08);
             }
-        });
-    </script>
+            return;
+          }
+        }
+      }
+      function draw() {
+        ctx.fillStyle = P.bg; ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = P.mut; mono(ctx, 10); ctx.textAlign = 'center';
+        ctx.fillText('TAP PPE IN THE SAFE DONNING ORDER', W / 2, 58);
+        // progress pips
+        for (var p = 0; p < 5; p++) { ctx.fillStyle = p < s.next ? P.a1 : P.rule; ctx.beginPath(); ctx.arc(W / 2 - 40 + p * 20, 78, 5, 0, Math.PI * 2); ctx.fill(); }
+        for (var i = 0; i < s.tiles.length; i++) {
+          var tl = s.tiles[i];
+          var hint = (s.missStep >= 2 && tl.step === s.next && !tl.done);
+          var glow = hint ? 0.5 + Math.sin(s.t * 6) * 0.4 : 0;
+          ctx.fillStyle = tl.done ? 'rgba(34,198,172,.14)' : tl.flash > 0.02 ? 'rgba(255,130,97,.16)' : P.panel;
+          ctx.strokeStyle = tl.done ? P.a1 : tl.flash > 0.02 ? P.a3 : hint ? P.a4 : P.rule;
+          ctx.lineWidth = tl.done ? 1.6 : hint ? 1.4 + glow : 1.2;
+          if (hint) { ctx.shadowColor = P.a4; ctx.shadowBlur = 14 * glow; }
+          rr(ctx, tl.x, tl.y, tl.w, tl.h, 14); ctx.fill(); ctx.shadowBlur = 0; ctx.stroke();
+          if (tl.done) { ctx.fillStyle = P.a1; disp(ctx, 20); ctx.fillText(String(tl.step + 1), tl.x - tl.w / 2 + 20, tl.y + 7); }
+          ctx.fillStyle = tl.done ? P.ink : P.ink; disp(ctx, 19, 500);
+          ctx.fillText(ORDER[tl.step], tl.x + (tl.done ? 12 : 0), tl.y + 7);
+        }
+        ctx.textAlign = 'left';
+        ctx.fillStyle = P.mut; mono(ctx, 9); ctx.fillText('ERRORS ' + s.miss, 16, H - 16);
+        ctx.fillStyle = P.ink; mono(ctx, 12, 700); ctx.fillText(s.t.toFixed(1) + 's', W - 62, H - 16);
+      }
+      return { reset: reset, step: step, draw: draw, down: function (x, y, e, r) { if (r) pick(x, y); } };
+    }
+  };
+
+  /* =========================================================
+     3 — LOTO hazard sweep
+     ========================================================= */
+  BUILDS.sweep = {
+    W: 640, H: 380,
+    make: function (ctx, W, H, host) {
+      var PW = 2200, LIMIT = 40, s = {}, scene = [];
+      function buildScene() {
+        scene = [];
+        for (var i = 0; i < 46; i++) { var w = rand(40, 130), h = rand(50, 190); scene.push({ t: 'box', x: rand(0, PW), w: w, h: h, y: 300 - h, sh: Math.random() < 0.5 }); }
+        for (var j = 0; j < 30; j++) scene.push({ t: 'pipe', x: rand(0, PW), y: rand(60, 160), h: rand(60, 190) });
+        for (var k = 0; k < 14; k++) scene.push({ t: 'tank', x: rand(0, PW), r: rand(22, 40) });
+        scene.sort(function (a, b) { return a.x - b.x; });
+      }
+      function reset() {
+        buildScene();
+        s = { cam: rand(0, PW), left: LIMIT, found: 0, hz: [], down: false, lastX: 0, moved: 0, pingT: 0 };
+        var slots = [];
+        for (var i = 0; i < 5; i++) slots.push((PW / 5) * i + rand(60, PW / 5 - 60));
+        for (var n = 0; n < 5; n++) s.hz.push({ x: slots[n], y: rand(120, 268), got: false });
+        host.score('0 / 5');
+      }
+      function step(dt) {
+        if (host.keys['arrowleft'] || host.keys['a']) s.cam -= 320 * dt;
+        if (host.keys['arrowright'] || host.keys['d']) s.cam += 320 * dt;
+        s.cam = (s.cam % PW + PW) % PW; s.left -= dt; s.pingT = Math.max(0, s.pingT - dt);
+        if (s.left <= 0) host.finish('Sweep failed', 'Time out with ' + s.found + ' of 5 hazards tagged. The real module makes you repeat it.', 'Try again');
+      }
+      function part(o, ox) {
+        var x = o.x + ox; if (x < -240 || x > W + 240) return;
+        if (o.t === 'box') {
+          ctx.fillStyle = P.panel; ctx.fillRect(x, o.y, o.w, o.h);
+          ctx.strokeStyle = P.rule; ctx.lineWidth = 1; ctx.strokeRect(x + .5, o.y + .5, o.w, o.h);
+          if (o.sh) { ctx.strokeStyle = P.rule; for (var i = 6; i < o.w; i += 12) { ctx.beginPath(); ctx.moveTo(x + i, o.y); ctx.lineTo(x + i - 10, o.y + o.h); ctx.stroke(); } }
+        } else if (o.t === 'pipe') {
+          ctx.strokeStyle = P.panel2; ctx.lineWidth = 7; ctx.beginPath(); ctx.moveTo(x, o.y); ctx.lineTo(x, o.y + o.h); ctx.stroke();
+          ctx.lineWidth = 1; ctx.strokeStyle = P.rule; ctx.beginPath(); ctx.moveTo(x - 6, o.y + o.h); ctx.lineTo(x + 6, o.y + o.h); ctx.stroke();
+        } else { ctx.strokeStyle = P.rule; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x, 300 - o.r, o.r, 0, Math.PI * 2); ctx.stroke(); }
+      }
+      function draw(t) {
+        ctx.fillStyle = P.bg; ctx.fillRect(0, 0, W, H);
+        var offs = [-s.cam, -s.cam + PW, -s.cam - PW];
+        for (var o = 0; o < offs.length; o++) for (var i = 0; i < scene.length; i++) part(scene[i], offs[o]);
+        ctx.strokeStyle = P.rule; ctx.beginPath(); ctx.moveTo(0, 300); ctx.lineTo(W, 300); ctx.stroke();
+        ctx.fillStyle = P.panel; ctx.fillRect(0, 300, W, 46);
+        for (var h = 0; h < s.hz.length; h++) {
+          var z = s.hz[h];
+          for (var q = 0; q < offs.length; q++) {
+            var x = z.x + offs[q]; if (x < -40 || x > W + 40) continue;
+            var pulse = 0.55 + Math.sin(t * 3 + h) * 0.28;
+            ctx.strokeStyle = z.got ? P.a1 : P.a3; ctx.globalAlpha = z.got ? 0.95 : pulse; ctx.lineWidth = 1.6;
+            ctx.beginPath(); ctx.moveTo(x, z.y - 10); ctx.lineTo(x + 10, z.y + 8); ctx.lineTo(x - 10, z.y + 8); ctx.closePath(); ctx.stroke();
+            ctx.fillStyle = z.got ? 'rgba(34,198,172,.15)' : 'rgba(255,130,97,.12)'; ctx.fill(); ctx.globalAlpha = 1;
+            if (z.got) { ctx.fillStyle = P.a1; mono(ctx, 8); ctx.fillText('LOCKED', x - 16, z.y + 22); }
+          }
+        }
+        ctx.fillStyle = P.bg; ctx.globalAlpha = 0.9; ctx.fillRect(0, H - 34, W, 34); ctx.globalAlpha = 1;
+        ctx.strokeStyle = P.rule; ctx.beginPath(); ctx.moveTo(0, H - 34.5); ctx.lineTo(W, H - 34.5); ctx.stroke();
+        ctx.fillStyle = s.left < 10 ? P.a3 : P.ink; mono(ctx, 12, 700); ctx.fillText(s.left.toFixed(1) + 's', 14, H - 13);
+        ctx.fillStyle = P.mut; mono(ctx, 9); ctx.fillText('TAGGED ' + s.found + '/5', 74, H - 13);
+        if (s.pingT > 0) { ctx.fillStyle = P.a3; ctx.globalAlpha = s.pingT * 2; ctx.fillText('NOTHING THERE', 170, H - 13); ctx.globalAlpha = 1; }
+        var mx = W - 214, mw = 200;
+        ctx.strokeStyle = P.rule; ctx.strokeRect(mx, H - 24, mw, 12);
+        ctx.fillStyle = 'rgba(123,140,255,.3)'; ctx.fillRect(mx + (s.cam / PW) * mw, H - 24, (W / PW) * mw, 12);
+        for (var m = 0; m < s.hz.length; m++) { ctx.fillStyle = s.hz[m].got ? P.a1 : P.mut; ctx.fillRect(mx + (s.hz[m].x / PW) * mw - 1, H - 24, 2, 12); }
+      }
+      function tag(x, y) {
+        var world = (s.cam + x) % PW;
+        for (var i = 0; i < s.hz.length; i++) {
+          var z = s.hz[i]; if (z.got) continue;
+          var dx = Math.abs(world - z.x); dx = Math.min(dx, PW - dx);
+          if (dx < 26 && Math.abs(y - z.y) < 26) {
+            z.got = true; s.found++; host.score(s.found + ' / 5'); host.sfx.play(760, 0.1, 'triangle', 0.11);
+            if (s.found === 5) host.finish('All clear', 'Five hazards locked out with ' + s.left.toFixed(1) + 's to spare. That is a pass.', 'Sweep again');
+            return;
+          }
+        }
+        s.pingT = 0.6; host.sfx.play(140, 0.08, 'square', 0.06);
+      }
+      return {
+        reset: reset, step: step, draw: draw,
+        down: function (x, y, e, r) { if (!r) return; s.down = true; s.lastX = x; s.moved = 0; },
+        move: function (x, y, e, r) { if (!r || !s.down) return; var d = s.lastX - x; s.cam = (s.cam + d % PW + PW) % PW; s.moved += Math.abs(d); s.lastX = x; },
+        up: function (x, y, e, r) { if (r && s.down && s.moved < 6) tag(x, y); s.down = false; }
+      };
+    }
+  };
+
+  /* =========================================================
+     4 — Load slinging crane
+     ========================================================= */
+  BUILDS.sling = {
+    W: 640, H: 380,
+    make: function (ctx, W, H, host) {
+      var BEAM = 46, GROUND = 330, MINX = 70, MAXX = 570, s = {};
+      var COLORS = [P.a1, P.a3, P.a4];
+      function reset() {
+        var cols = [P.a1, P.a3, P.a4];
+        var crates = [
+          { c: 0, w: 58, h: 40, x: 120, y: GROUND - 20, placed: false, carried: false },
+          { c: 1, w: 58, h: 40, x: 190, y: GROUND - 20, placed: false, carried: false },
+          { c: 2, w: 58, h: 40, x: 260, y: GROUND - 20, placed: false, carried: false }
+        ];
+        var order = [0, 1, 2];
+        for (var i = order.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = order[i]; order[i] = order[j]; order[j] = t; }
+        var pads = [
+          { c: order[0], x: 420 }, { c: order[1], x: 490 }, { c: order[2], x: 560 }
+        ];
+        s = { trolley: 320, prevT: 320, vx: 0, cable: 70, theta: 0, omega: 0, crates: crates, pads: pads, carry: null, placed: 0, t: 0, drops: 0, msg: '', msgT: 0 };
+        host.score('0 / 3 placed');
+      }
+      function hookPos() {
+        var hx = s.trolley + Math.sin(s.theta) * s.cable;
+        var hy = BEAM + 6 + Math.cos(s.theta) * s.cable;
+        return { x: hx, y: hy };
+      }
+      function step(dt) {
+        s.t += dt; s.msgT = Math.max(0, s.msgT - dt);
+        var move = 0;
+        if (host.keys['arrowleft'] || host.keys['a']) move -= 1;
+        if (host.keys['arrowright'] || host.keys['d']) move += 1;
+        s.prevT = s.trolley;
+        s.trolley = clamp(s.trolley + move * 200 * dt, MINX, MAXX);
+        var newVx = (s.trolley - s.prevT) / Math.max(dt, 0.001);
+        var accel = (newVx - s.vx) / Math.max(dt, 0.001); s.vx = newVx;
+        if (host.keys['arrowdown'] || host.keys['s']) s.cable = clamp(s.cable + 150 * dt, 40, GROUND - BEAM - 24);
+        if (host.keys['arrowup'] || host.keys['w']) s.cable = clamp(s.cable - 150 * dt, 40, GROUND - BEAM - 24);
+        // pendulum swing driven by trolley acceleration
+        var swayAcc = -28 * s.theta - 2.6 * s.omega - accel * 0.0011;
+        s.omega += swayAcc * dt; s.theta += s.omega * dt; s.theta = clamp(s.theta, -0.6, 0.6);
+      }
+      function attach() {
+        if (s.carry) return;
+        var hk = hookPos(), best = null, bd = 30;
+        for (var i = 0; i < s.crates.length; i++) {
+          var c = s.crates[i]; if (c.placed || c.carried) continue;
+          var d = Math.hypot(hk.x - c.x, hk.y - (c.y - c.h / 2));
+          if (d < bd) { bd = d; best = c; }
+        }
+        if (best) { best.carried = true; s.carry = best; host.sfx.play(300, 0.08, 'sine', 0.09); }
+        else { s.msg = 'No load in reach'; s.msgT = 1.2; host.sfx.play(140, 0.07, 'square', 0.05); }
+      }
+      function detach() {
+        if (!s.carry) return;
+        var c = s.carry, hk = hookPos();
+        var pad = null;
+        for (var i = 0; i < s.pads.length; i++) if (s.pads[i].c === c.c) pad = s.pads[i];
+        var overPad = pad && Math.abs(hk.x - pad.x) < 28;
+        var low = s.cable > (GROUND - BEAM - 70);
+        var steady = Math.abs(s.theta) < 0.14 && Math.abs(s.omega) < 0.5;
+        if (overPad && low && steady) {
+          c.x = pad.x; c.y = GROUND - 20; c.placed = true; c.carried = false; s.carry = null; s.placed++;
+          host.score(s.placed + ' / 3 placed'); host.sfx.play(560 + s.placed * 90, 0.1, 'triangle', 0.11);
+          if (s.placed === 3) host.finish(s.t.toFixed(1) + 's', s.drops === 0 ? 'All loads landed clean, no dropped sets.' : 'Delivered with ' + s.drops + ' dropped set' + (s.drops > 1 ? 's' : '') + '. Smooth trolley work keeps the sway down.', 'Rig again');
+        } else {
+          c.x = clamp(hk.x, MINX, MAXX); c.y = GROUND - 20; c.carried = false; s.carry = null; s.drops++;
+          s.msg = overPad ? 'Lower it and steady the swing' : 'Not over the matching pad'; s.msgT = 1.6;
+          host.sfx.play(150, 0.09, 'square', 0.06);
+        }
+      }
+      function draw(t) {
+        ctx.fillStyle = P.bg; ctx.fillRect(0, 0, W, H);
+        // gantry
+        ctx.strokeStyle = P.rule; ctx.lineWidth = 1;
+        ctx.fillStyle = P.panel; ctx.fillRect(30, BEAM - 6, W - 60, 12); ctx.strokeRect(30, BEAM - 6, W - 60, 12);
+        ctx.beginPath(); ctx.moveTo(40, BEAM + 6); ctx.lineTo(40, GROUND); ctx.moveTo(W - 40, BEAM + 6); ctx.lineTo(W - 40, GROUND); ctx.stroke();
+        // ground
+        ctx.strokeStyle = P.rule; ctx.beginPath(); ctx.moveTo(0, GROUND); ctx.lineTo(W, GROUND); ctx.stroke();
+        ctx.fillStyle = P.panel; ctx.fillRect(0, GROUND, W, H - GROUND);
+        // pads
+        for (var i = 0; i < s.pads.length; i++) {
+          var pd = s.pads[i];
+          ctx.strokeStyle = COLORS[pd.c]; ctx.globalAlpha = 0.9; ctx.lineWidth = 1.6; ctx.setLineDash([5, 5]);
+          ctx.strokeRect(pd.x - 32, GROUND - 4, 64, 8); ctx.setLineDash([]);
+          ctx.globalAlpha = 0.14; ctx.fillStyle = COLORS[pd.c]; ctx.fillRect(pd.x - 32, GROUND - 40, 64, 36); ctx.globalAlpha = 1;
+        }
+        // hook + cable
+        var hk = hookPos();
+        ctx.strokeStyle = P.mut; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.moveTo(s.trolley, BEAM + 6); ctx.lineTo(hk.x, hk.y); ctx.stroke();
+        // trolley
+        ctx.fillStyle = P.panel2; ctx.strokeStyle = P.ink; ctx.lineWidth = 1.4;
+        rr(ctx, s.trolley, BEAM, 30, 16, 4); ctx.fill(); ctx.stroke();
+        // hook glyph
+        ctx.strokeStyle = P.ink; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(hk.x, hk.y + 4, 5, Math.PI * 0.1, Math.PI * 1.7); ctx.stroke();
+        // crates
+        for (var c = 0; c < s.crates.length; c++) {
+          var cr = s.crates[c];
+          var cx = cr.x, cy = cr.y;
+          if (cr.carried) { cx = hk.x; cy = hk.y + cr.h / 2 + 6; }
+          ctx.fillStyle = P.panel; ctx.strokeStyle = COLORS[cr.c]; ctx.lineWidth = cr.placed ? 2 : 1.6;
+          if (cr.carried) { ctx.shadowColor = COLORS[cr.c]; ctx.shadowBlur = 14; }
+          rr(ctx, cx, cy - cr.h / 2, cr.w, cr.h, 6); ctx.fill(); ctx.shadowBlur = 0; ctx.stroke();
+          ctx.globalAlpha = 0.5; ctx.strokeStyle = COLORS[cr.c];
+          ctx.beginPath(); ctx.moveTo(cx - cr.w / 2, cy - cr.h); ctx.lineTo(cx + cr.w / 2, cy); ctx.moveTo(cx + cr.w / 2, cy - cr.h); ctx.lineTo(cx - cr.w / 2, cy); ctx.stroke(); ctx.globalAlpha = 1;
+          if (cr.placed) { ctx.fillStyle = COLORS[cr.c]; mono(ctx, 8); ctx.textAlign = 'center'; ctx.fillText('SET', cx, cy - cr.h / 2 + 3); ctx.textAlign = 'left'; }
+        }
+        // sway meter
+        var swayBad = Math.abs(s.theta) > 0.14;
+        ctx.fillStyle = P.mut; mono(ctx, 9); ctx.fillText('SWAY', 16, 24);
+        ctx.strokeStyle = P.rule; ctx.strokeRect(52, 16, 90, 8);
+        ctx.fillStyle = swayBad ? P.a3 : P.a1; ctx.fillRect(52 + 45 + s.theta / 0.6 * 45 - 2, 16, 4, 8);
+        ctx.fillStyle = s.carry ? P.a1 : P.mut; mono(ctx, 9); ctx.fillText(s.carry ? 'CARRYING' : 'HOOK EMPTY', 160, 24);
+        ctx.fillStyle = P.ink; mono(ctx, 12, 700); ctx.fillText(s.t.toFixed(1) + 's', W - 62, 24);
+        if (s.msgT > 0) { ctx.fillStyle = P.a3; mono(ctx, 10); ctx.textAlign = 'center'; ctx.globalAlpha = clamp(s.msgT, 0, 1); ctx.fillText(s.msg, W / 2, GROUND + 34); ctx.globalAlpha = 1; ctx.textAlign = 'left'; }
+      }
+      return {
+        reset: reset, step: step, draw: draw,
+        key: function (k) { if (k === 'e') attach(); else if (k === 'q') detach(); else if (k === ' ') { if (s.carry) detach(); else attach(); } },
+        action: function (name) { if (name === 'attach') attach(); else if (name === 'detach') detach(); }
+      };
+    }
+  };
+
+  /* =========================================================
+     5 — AR equipment visualiser (exploded / assembled)
+     ========================================================= */
+  BUILDS.viz = {
+    W: 640, H: 380,
+    make: function (ctx, W, H, host) {
+      var F = 460, CAMD = 6.2;
+      var s = {};
+      // parts stacked along Y, drawn as short boxes; each has a name + accent
+      var PARTS = [
+        { n: 'End cap', w: 1.5, h: 0.35, d: 1.5, y: 1.75, ai: 3 },
+        { n: 'Cover', w: 1.9, h: 0.4, d: 1.9, y: 1.25, ai: 1 },
+        { n: 'Rotor', w: 1.3, h: 0.7, d: 1.3, y: 0.55, ai: 0 },
+        { n: 'Housing', w: 2.1, h: 0.9, d: 2.1, y: -0.4, ai: 2 },
+        { n: 'Base plate', w: 2.5, h: 0.35, d: 2.5, y: -1.15, ai: 3 }
+      ];
+      function reset() {
+        s = { yaw: 0.7, pitch: 0.32, tYaw: 0.7, tPitch: 0.32, e: 0, te: 0, down: false, drag: false, px: 0, py: 0, moved: 0, sel: -1, mode: 'assembled' };
+        host.score('assembled');
+      }
+      function cam(p) {
+        var q = rotY(p, s.yaw); q = rotX(q, s.pitch);
+        var z = q[2] + CAMD; if (z < 0.3) return null;
+        var sc = F / z; return { x: W / 2 + q[0] * sc, y: H / 2 - q[1] * sc, z: z };
+      }
+      function partCenterY(i) { return PARTS[i].y * (1 + s.e * 1.4) + (s.e * (i - 2) * 0.6); }
+      function boxVerts(p, cy) {
+        var hx = p.w / 2, hy = p.h / 2, hz = p.d / 2;
+        return [
+          [-hx, cy - hy, -hz], [hx, cy - hy, -hz], [hx, cy + hy, -hz], [-hx, cy + hy, -hz],
+          [-hx, cy - hy, hz], [hx, cy - hy, hz], [hx, cy + hy, hz], [-hx, cy + hy, hz]
+        ];
+      }
+      var FACES = [[0, 1, 2, 3], [4, 5, 6, 7], [0, 1, 5, 4], [2, 3, 7, 6], [1, 2, 6, 5], [0, 3, 7, 4]];
+      var EDGES = [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]];
+      var accents = function () { return [P.a1, P.a2, P.a3, P.a4]; };
+      function step(dt) {
+        if (!s.down) s.tYaw += 0.004;
+        s.yaw = lerp(s.yaw, s.tYaw, 0.1); s.pitch = lerp(s.pitch, clamp(s.tPitch, -0.5, 0.9), 0.1);
+        s.e = lerp(s.e, s.te, 0.12);
+      }
+      function draw() {
+        ctx.fillStyle = P.bg; ctx.fillRect(0, 0, W, H);
+        // AR floor rings
+        ctx.strokeStyle = P.rule;
+        for (var g = 1; g <= 6; g++) {
+          ctx.globalAlpha = 0.5 - g * 0.06; ctx.beginPath();
+          var okr = true;
+          for (var a = 0; a <= 32; a++) {
+            var pt = cam([Math.cos(a / 32 * Math.PI * 2) * g * 0.7, -1.5, Math.sin(a / 32 * Math.PI * 2) * g * 0.7]);
+            if (!pt) { okr = false; break; }
+            if (a === 0) ctx.moveTo(pt.x, pt.y); else ctx.lineTo(pt.x, pt.y);
+          }
+          if (okr) ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+        var acc = accents();
+        // depth sort parts
+        var order = [];
+        for (var i = 0; i < PARTS.length; i++) {
+          var cy = partCenterY(i), vs = boxVerts(PARTS[i], cy).map(cam);
+          var zc = 0, ok = true;
+          for (var v = 0; v < vs.length; v++) { if (!vs[v]) { ok = false; break; } zc += vs[v].z; }
+          if (ok) order.push({ i: i, z: zc / 8, vs: vs, cy: cy });
+        }
+        order.sort(function (a, b) { return b.z - a.z; });
+        for (var o = 0; o < order.length; o++) {
+          var it = order[o], p = PARTS[it.i], col = acc[p.ai], sel = s.sel === it.i;
+          // faces
+          for (var f = 0; f < FACES.length; f++) {
+            var fc = FACES[f], q = [it.vs[fc[0]], it.vs[fc[1]], it.vs[fc[2]], it.vs[fc[3]]];
+            // back-face-ish cull by winding
+            var area = (q[1].x - q[0].x) * (q[2].y - q[0].y) - (q[1].y - q[0].y) * (q[2].x - q[0].x);
+            if (area <= 0) continue;
+            ctx.beginPath(); ctx.moveTo(q[0].x, q[0].y); for (var w = 1; w < 4; w++) ctx.lineTo(q[w].x, q[w].y); ctx.closePath();
+            ctx.globalAlpha = sel ? 0.28 : 0.16; ctx.fillStyle = col; ctx.fill(); ctx.globalAlpha = 1;
+          }
+          ctx.strokeStyle = col; ctx.globalAlpha = sel ? 1 : 0.85; ctx.lineWidth = sel ? 2 : 1.3;
+          if (sel) { ctx.shadowColor = col; ctx.shadowBlur = 12; }
+          ctx.beginPath();
+          for (var e = 0; e < EDGES.length; e++) { var a2 = it.vs[EDGES[e][0]], b2 = it.vs[EDGES[e][1]]; ctx.moveTo(a2.x, a2.y); ctx.lineTo(b2.x, b2.y); }
+          ctx.stroke(); ctx.shadowBlur = 0; ctx.globalAlpha = 1;
+          it.col = col;
+        }
+        // label for selected part (exploded)
+        if (s.sel >= 0 && s.e > 0.3) {
+          var sc = cam([PARTS[s.sel].w / 2 + 0.3, partCenterY(s.sel), 0]);
+          if (sc) {
+            ctx.strokeStyle = acc[PARTS[s.sel].ai]; ctx.lineWidth = 1; ctx.globalAlpha = 0.7;
+            ctx.beginPath(); ctx.moveTo(sc.x, sc.y); ctx.lineTo(sc.x + 34, sc.y); ctx.stroke(); ctx.globalAlpha = 1;
+            ctx.fillStyle = P.ink; disp(ctx, 15, 500); ctx.fillText(PARTS[s.sel].n, sc.x + 40, sc.y + 5);
+          }
+        }
+        ctx.fillStyle = P.mut; mono(ctx, 9);
+        ctx.fillText(s.e > 0.5 ? 'EXPLODED VIEW' : 'ASSEMBLED VIEW', 16, H - 16);
+        ctx.fillText('DRAG TO ORBIT', W - 140, H - 16);
+      }
+      function hit(x, y) {
+        // pick nearest part center in screen space
+        var best = -1, bd = 60;
+        for (var i = 0; i < PARTS.length; i++) {
+          var c = cam([0, partCenterY(i), 0]); if (!c) continue;
+          var d = Math.hypot(c.x - x, c.y - y);
+          if (d < bd) { bd = d; best = i; }
+        }
+        s.sel = best;
+        if (best >= 0) host.sfx.play(360 + PARTS[best].ai * 90, 0.1, 'triangle', 0.09);
+      }
+      return {
+        reset: reset, step: step, draw: draw,
+        down: function (x, y, e, r) { if (!r) return; s.down = true; s.drag = false; s.px = x; s.py = y; s.moved = 0; },
+        move: function (x, y, e, r) {
+          if (!r || !s.down) return;
+          var dx = x - s.px, dy = y - s.py; s.moved += Math.abs(dx) + Math.abs(dy);
+          if (s.moved > 5) s.drag = true;
+          if (s.drag) { s.tYaw += dx * 0.008; s.tPitch += dy * 0.006; }
+          s.px = x; s.py = y;
+        },
+        up: function (x, y, e, r) { if (r && s.down && !s.drag) hit(x, y); s.down = false; },
+        key: function (k) { if (k === ' ') { s.te = s.te > 0.5 ? 0 : 1; s.mode = s.te > 0.5 ? 'exploded' : 'assembled'; host.score(s.mode); } },
+        action: function (name, btn) {
+          if (name === 'explode') {
+            s.te = s.te > 0.5 ? 0 : 1; s.mode = s.te > 0.5 ? 'exploded' : 'assembled';
+            if (btn) { btn.textContent = s.te > 0.5 ? 'Assemble' : 'Explode'; btn.classList.toggle('hot', s.te > 0.5); }
+            host.score(s.mode); host.sfx.play(s.te > 0.5 ? 500 : 300, 0.12, 'sine', 0.09);
+          } else if (name === 'reset') { s.tYaw = 0.7; s.tPitch = 0.32; s.sel = -1; }
+        }
+      };
+    }
+  };
+
+  /* =========================================================
+     6 — Property walkthrough (maze)
+     ========================================================= */
+  BUILDS.maze = {
+    W: 640, H: 380,
+    make: function (ctx, W, H, host) {
+      var COLS = 21, ROWS = 13, CELL = 28, OX = (640 - COLS * 28) / 2, OY = (380 - ROWS * 28) / 2, s = {};
+      function gen() {
+        var g = [], y, x;
+        for (y = 0; y < ROWS; y++) { g.push([]); for (x = 0; x < COLS; x++) g[y].push(1); }
+        var st = [[1, 1]]; g[1][1] = 0;
+        while (st.length) {
+          var cur = st[st.length - 1], cx = cur[0], cy = cur[1];
+          var dirs = [[2, 0], [-2, 0], [0, 2], [0, -2]];
+          for (var i = dirs.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var tm = dirs[i]; dirs[i] = dirs[j]; dirs[j] = tm; }
+          var moved = false;
+          for (var d = 0; d < 4; d++) {
+            var nx = cx + dirs[d][0], ny = cy + dirs[d][1];
+            if (nx > 0 && ny > 0 && nx < COLS - 1 && ny < ROWS - 1 && g[ny][nx] === 1) {
+              g[ny][nx] = 0; g[cy + dirs[d][1] / 2][cx + dirs[d][0] / 2] = 0; st.push([nx, ny]); moved = true; break;
+            }
+          }
+          if (!moved) st.pop();
+        }
+        return g;
+      }
+      function reset() {
+        var g = gen(), spots = [];
+        for (var y = 0; y < ROWS; y++) for (var x = 0; x < COLS; x++)
+          if (g[y][x] === 0 && (x > 5 || y > 5) && !(x === COLS - 2 && y === ROWS - 2)) spots.push([x, y]);
+        var keys = [];
+        for (var k = 0; k < 3 && spots.length; k++) { var idx = Math.floor(Math.random() * spots.length); keys.push({ x: spots[idx][0], y: spots[idx][1], got: false }); spots.splice(idx, 1); }
+        s = { g: g, cx: 1, cy: 1, px: 1, py: 1, dir: [1, 0], keys: keys, got: 0, t: 0, exit: [COLS - 2, ROWS - 2], msg: '', msgT: 0 };
+        host.score('0 / 3 rooms');
+      }
+      function open(x, y) { return x >= 0 && y >= 0 && x < COLS && y < ROWS && s.g[y][x] === 0; }
+      function step(dt) {
+        s.t += dt; s.msgT = Math.max(0, s.msgT - dt);
+        var dx = s.cx - s.px, dy = s.cy - s.py, dist = Math.hypot(dx, dy);
+        if (dist > 0.001) { var sp = 7 * dt; if (sp >= dist) { s.px = s.cx; s.py = s.cy; } else { s.px += dx / dist * sp; s.py += dy / dist * sp; } }
+        else {
+          var k = host.keys, nx = s.cx, ny = s.cy;
+          if (k['arrowup'] || k['w']) { ny--; s.dir = [0, -1]; }
+          else if (k['arrowdown'] || k['s']) { ny++; s.dir = [0, 1]; }
+          else if (k['arrowleft'] || k['a']) { nx--; s.dir = [-1, 0]; }
+          else if (k['arrowright'] || k['d']) { nx++; s.dir = [1, 0]; }
+          if ((nx !== s.cx || ny !== s.cy) && open(nx, ny)) { s.cx = nx; s.cy = ny; }
+        }
+        for (var i = 0; i < s.keys.length; i++) {
+          var kk = s.keys[i];
+          if (!kk.got && Math.abs(s.px - kk.x) < 0.5 && Math.abs(s.py - kk.y) < 0.5) { kk.got = true; s.got++; host.score(s.got + ' / 3 rooms'); host.sfx.play(600 + s.got * 140, 0.1, 'triangle', 0.1); }
+        }
+        if (Math.abs(s.px - s.exit[0]) < 0.5 && Math.abs(s.py - s.exit[1]) < 0.5) {
+          if (s.got === 3) host.finish(s.t.toFixed(1) + 's', 'Full tour completed. Every floor plan is generated fresh, so the route is never the same twice.', 'New property');
+          else if (s.msgT <= 0) { s.msg = 'Visit all 3 rooms first'; s.msgT = 1.6; }
+        }
+      }
+      function draw(t) {
+        ctx.fillStyle = P.bg; ctx.fillRect(0, 0, W, H);
+        for (var y = 0; y < ROWS; y++) for (var x = 0; x < COLS; x++) {
+          var X0 = OX + x * CELL, Y0 = OY + y * CELL;
+          if (s.g[y][x] === 1) { ctx.fillStyle = P.panel; ctx.fillRect(X0, Y0, CELL, CELL); ctx.strokeStyle = P.rule; ctx.lineWidth = 1; ctx.strokeRect(X0 + .5, Y0 + .5, CELL - 1, CELL - 1); }
+          else { ctx.fillStyle = P.bg; ctx.fillRect(X0, Y0, CELL, CELL); }
+        }
+        var ex = OX + s.exit[0] * CELL, ey = OY + s.exit[1] * CELL;
+        ctx.fillStyle = s.got === 3 ? 'rgba(123,140,255,.35)' : 'rgba(123,140,255,.12)'; ctx.fillRect(ex + 4, ey + 4, CELL - 8, CELL - 8);
+        ctx.strokeStyle = P.a2; ctx.lineWidth = 1.4; ctx.strokeRect(ex + 4, ey + 4, CELL - 8, CELL - 8);
+        for (var i = 0; i < s.keys.length; i++) {
+          var kk = s.keys[i]; if (kk.got) continue;
+          var kx = OX + kk.x * CELL + CELL / 2, ky = OY + kk.y * CELL + CELL / 2, pu = 4 + Math.sin(t * 3 + i) * 1.6;
+          ctx.save(); ctx.translate(kx, ky); ctx.rotate(t * 1.1 + i); ctx.fillStyle = P.a4; ctx.globalAlpha = 0.9; ctx.fillRect(-pu, -pu, pu * 2, pu * 2); ctx.restore(); ctx.globalAlpha = 1;
+        }
+        var pxp = OX + s.px * CELL + CELL / 2, pyp = OY + s.py * CELL + CELL / 2, ang = Math.atan2(s.dir[1], s.dir[0]);
+        var cone = ctx.createRadialGradient(pxp, pyp, 4, pxp, pyp, 92);
+        cone.addColorStop(0, 'rgba(34,198,172,.18)'); cone.addColorStop(1, 'rgba(34,198,172,0)');
+        ctx.fillStyle = cone; ctx.beginPath(); ctx.moveTo(pxp, pyp); ctx.arc(pxp, pyp, 92, ang - 0.55, ang + 0.55); ctx.closePath(); ctx.fill();
+        ctx.fillStyle = P.a1; ctx.beginPath(); ctx.arc(pxp, pyp, 6, 0, Math.PI * 2); ctx.fill();
+        var fog = ctx.createRadialGradient(pxp, pyp, 40, pxp, pyp, 240);
+        fog.addColorStop(0, 'rgba(0,0,0,0)'); fog.addColorStop(1, P.bg);
+        ctx.fillStyle = fog; ctx.globalAlpha = 0.72; ctx.fillRect(0, 0, W, H); ctx.globalAlpha = 1;
+        ctx.fillStyle = P.mut; mono(ctx, 9); ctx.fillText('ROOMS ' + s.got + '/3', 12, 18);
+        ctx.fillStyle = P.ink; mono(ctx, 12, 700); ctx.fillText(s.t.toFixed(1) + 's', W - 60, 18);
+        if (s.msgT > 0) { ctx.fillStyle = P.a3; mono(ctx, 10); ctx.textAlign = 'center'; ctx.globalAlpha = clamp(s.msgT, 0, 1); ctx.fillText(s.msg, W / 2, H - 12); ctx.globalAlpha = 1; ctx.textAlign = 'left'; }
+      }
+      return { reset: reset, step: step, draw: draw };
+    }
+  };
+
+  /* =========================================================
+     7 — QA defect hunt (Tax Form Validator)
+     ========================================================= */
+  BUILDS.qa = {
+    W: 640, H: 380,
+    make: function (ctx, W, H, host) {
+      var cols = [
+        { k: 'id', label: 'ID', w: 70 }, { k: 'emp', label: 'Employee', w: 120 },
+        { k: 'email', label: 'Email', w: 170 }, { k: 'gross', label: 'Gross', w: 70 },
+        { k: 'tax', label: 'Tax', w: 60 }, { k: 'status', label: 'Status', w: 70 }
+      ];
+      var X0 = 40, TW = 560, xacc = []; (function () { var x = X0; for (var i = 0; i < cols.length; i++) { xacc.push(x); x += cols[i].w; } })();
+      var HY = 66, HH = 28, RY = 96, RH = 32;
+      var defPool = [
+        { cells: { id: 'TX-140', emp: 'A. Nair', email: 'a.nair#mail.com', gross: '4200', tax: '420', status: 'Filed' }, col: 'email', reason: 'Email is missing the @ symbol' },
+        { cells: { id: 'TX-156', emp: 'R. Menon', email: 'r.menon@mail.com', gross: '5000', tax: '480', status: 'Pending' }, col: 'tax', reason: 'Tax is not 10 percent of gross' },
+        { cells: { id: 'TX-171', emp: 'S. Iyer', email: 's.iyer@corp.in', gross: '0', tax: '0', status: 'Filed' }, col: 'gross', reason: 'Gross amount cannot be zero' },
+        { cells: { id: 'TX-188', emp: 'K. Das', email: 'k.das@mail.com', gross: '3000', tax: '300', status: 'Approved' }, col: 'status', reason: 'Status is not an allowed value' },
+        { cells: { id: 'TX-0A7', emp: 'M. Roy', email: 'm.roy@mail.com', gross: '6100', tax: '610', status: 'Pending' }, col: 'id', reason: 'Record ID is malformed' },
+        { cells: { id: 'TX-219', emp: 'P. Varma', email: 'p.varma@corp.in', gross: '2500', tax: '25', status: 'Filed' }, col: 'tax', reason: 'Tax is not 10 percent of gross' },
+        { cells: { id: 'TX-241', emp: 'J. Thomas', email: 'j.thomas@mail', gross: '3800', tax: '380', status: 'Filed' }, col: 'email', reason: 'Email domain is incomplete' },
+        { cells: { id: 'TX-263', emp: 'B. Kurian', email: 'b.kurian@mail.com', gross: '-900', tax: '0', status: 'Review' }, col: 'gross', reason: 'Gross amount is negative' }
+      ];
+      var cleanPool = [
+        { cells: { id: 'TX-118', emp: 'D. Pillai', email: 'd.pillai@mail.com', gross: '4400', tax: '440', status: 'Filed' }, col: null },
+        { cells: { id: 'TX-205', emp: 'N. Rao', email: 'n.rao@corp.in', gross: '7200', tax: '720', status: 'Review' }, col: null },
+        { cells: { id: 'TX-330', emp: 'L. Kurup', email: 'l.kurup@mail.com', gross: '5600', tax: '560', status: 'Pending' }, col: null },
+        { cells: { id: 'TX-402', emp: 'G. Shetty', email: 'g.shetty@corp.in', gross: '3100', tax: '310', status: 'Filed' }, col: null }
+      ];
+      var s = {};
+      function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+      function reset() {
+        var defs = shuffle(defPool.slice()).slice(0, 5);
+        var cleans = shuffle(cleanPool.slice()).slice(0, 2);
+        var rows = shuffle(defs.concat(cleans)).map(function (r) { return { cells: r.cells, col: r.col, reason: r.reason, found: false }; });
+        s = { rows: rows, found: 0, t: 0, wrong: 0, flash: null, flashT: 0, note: '', noteOk: false, noteT: 0 };
+        host.score('0 / 5 found');
+      }
+      function step(dt) { s.t += dt; s.flashT = Math.max(0, s.flashT - dt * 3); s.noteT = Math.max(0, s.noteT - dt); }
+      function cellAt(x, y) {
+        if (y < RY || y > RY + s.rows.length * RH) return null;
+        var ri = Math.floor((y - RY) / RH); if (ri < 0 || ri >= s.rows.length) return null;
+        var ci = -1; for (var i = 0; i < cols.length; i++) if (x >= xacc[i] && x < xacc[i] + cols[i].w) { ci = i; break; }
+        if (ci < 0) return null; return { ri: ri, ci: ci };
+      }
+      function click(x, y) {
+        var c = cellAt(x, y); if (!c) return;
+        var row = s.rows[c.ri], key = cols[c.ci].k;
+        if (row.col === key) {
+          if (row.found) return;
+          row.found = true; s.found++; s.note = row.reason; s.noteOk = true; s.noteT = 2.8;
+          host.score(s.found + ' / 5 found'); host.sfx.play(620 + s.found * 70, 0.09, 'triangle', 0.1);
+          if (s.found === 5) host.finish(s.t.toFixed(1) + 's', s.wrong === 0 ? 'Every defect caught with no false positives. Clean test run.' : 'All 5 defects caught with ' + s.wrong + ' false flag' + (s.wrong > 1 ? 's' : '') + '. Fewer false positives means a tighter suite.', 'New test run');
+        } else {
+          s.flash = { ri: c.ri, ci: c.ci }; s.flashT = 1; s.wrong++;
+          s.note = 'This cell passes validation'; s.noteOk = false; s.noteT = 1.6;
+          host.sfx.play(140, 0.09, 'square', 0.07);
+        }
+      }
+      function draw() {
+        ctx.fillStyle = P.bg; ctx.fillRect(0, 0, W, H);
+        ctx.textAlign = 'left'; ctx.fillStyle = P.mut; mono(ctx, 10);
+        ctx.fillText('CLICK EVERY CELL THAT FAILS VALIDATION', X0, 46);
+        // header
+        ctx.fillStyle = P.panel2; ctx.fillRect(X0, HY, TW, HH);
+        ctx.strokeStyle = P.rule; ctx.lineWidth = 1; ctx.strokeRect(X0 + .5, HY + .5, TW, HH);
+        for (var i = 0; i < cols.length; i++) { ctx.fillStyle = P.mut; mono(ctx, 10, 700); ctx.fillText(cols[i].label.toUpperCase(), xacc[i] + 8, HY + 18); }
+        // rows
+        for (var r = 0; r < s.rows.length; r++) {
+          var row = s.rows[r], y = RY + r * RH;
+          ctx.globalAlpha = r % 2 ? 1 : 0.5; ctx.fillStyle = r % 2 ? P.bg : P.panel; ctx.fillRect(X0, y, TW, RH); ctx.globalAlpha = 1;
+          for (var ci = 0; ci < cols.length; ci++) {
+            var key = cols[ci].k, val = row.cells[key];
+            var isFound = row.found && row.col === key;
+            var isFlash = s.flash && s.flash.ri === r && s.flash.ci === ci && s.flashT > 0.02;
+            if (isFound) { ctx.fillStyle = 'rgba(34,198,172,.16)'; ctx.fillRect(xacc[ci], y, cols[ci].w, RH); ctx.strokeStyle = P.a1; ctx.lineWidth = 1.4; ctx.strokeRect(xacc[ci] + .5, y + .5, cols[ci].w - 1, RH - 1); }
+            else if (isFlash) { ctx.fillStyle = 'rgba(255,130,97,.18)'; ctx.fillRect(xacc[ci], y, cols[ci].w, RH); ctx.strokeStyle = P.a3; ctx.lineWidth = 1.4; ctx.strokeRect(xacc[ci] + .5, y + .5, cols[ci].w - 1, RH - 1); }
+            ctx.fillStyle = isFound ? P.a1 : P.ink; mono(ctx, 10.5);
+            ctx.fillText(val, xacc[ci] + 8, y + RH / 2 + 4);
+          }
+        }
+        // grid
+        ctx.strokeStyle = P.rule; ctx.lineWidth = 1; ctx.strokeRect(X0 + .5, RY + .5, TW, s.rows.length * RH);
+        for (var g = 1; g < cols.length; g++) { ctx.beginPath(); ctx.moveTo(xacc[g] + .5, RY); ctx.lineTo(xacc[g] + .5, RY + s.rows.length * RH); ctx.stroke(); }
+        // status note
+        if (s.noteT > 0) { ctx.globalAlpha = clamp(s.noteT, 0, 1); ctx.fillStyle = s.noteOk ? P.a1 : P.a3; mono(ctx, 10); ctx.textAlign = 'center'; ctx.fillText(s.note, W / 2, 352); ctx.globalAlpha = 1; ctx.textAlign = 'left'; }
+        // footer counters
+        ctx.fillStyle = P.mut; mono(ctx, 9); ctx.fillText('DEFECTS ' + s.found + '/5    FALSE FLAGS ' + s.wrong, X0, H - 14);
+        ctx.fillStyle = P.ink; mono(ctx, 12, 700); ctx.textAlign = 'right'; ctx.fillText(s.t.toFixed(1) + 's', W - 40, H - 14); ctx.textAlign = 'left';
+      }
+      return { reset: reset, step: step, draw: draw, down: function (x, y, e, r) { if (r) click(x, y); } };
+    }
+  };
+
+  Array.prototype.forEach.call(document.querySelectorAll('.game'), mount);
+
+})();
+
+</script>
 </body>
 </html>

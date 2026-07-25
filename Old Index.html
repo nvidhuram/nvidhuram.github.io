@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vidhuram N - Unity & VR Developer Portfolio</title>
+    <meta name="description" content="Portfolio of Vidhuram N - Unity & VR Developer specializing in immersive experiences">
+    <style>
+        :root {
+            --primary: #00d9ff;
+            --primary-dark: #00a8cc;
+            --secondary: #ff006e;
+            --bg-dark: #0a0e27;
+            --bg-darker: #050814;
+            --bg-card: #1a1f3a;
+            --text-primary: #ffffff;
+            --text-secondary: #b8c5d6;
+            --text-muted: #6b7a99;
+            --accent-purple: #b026ff;
+            --accent-green: #00ff88;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation::before,
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .bg-animation::before {
+            width: 500px;
+            height: 500px;
+            background: var(--primary);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .bg-animation::after {
+            width: 400px;
+            height: 400px;
+            background: var(--accent-purple);
+            bottom: -150px;
+            right: -150px;
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -50px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        /* Hero Section - FIXED: Added more top padding */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 1;
+        }
+
+        /* Profile Image - FIXED: Added margin-top to clear navigation */
+        .hero-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin: 2rem auto 2rem;
+            border: 4px solid transparent;
+            background: linear-gradient(var(--bg-dark), var(--bg-dark)) padding-box,
+                        linear-gradient(135deg, var(--primary), var(--accent-purple)) border-box;
+            padding: 4px;
+            animation: pulse 3s infinite;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .title {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .hero .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-text {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent-purple));
+            color: var(--text-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: var(--bg-dark);
+        }
+
+        /* Featured Projects Section */
+        .featured-projects {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 217, 255, 0.1);
+            position: relative;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent-purple));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(0, 217, 255, 0.2);
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .project-icon {
+            padding: 2rem;
+            font-size: 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.05), rgba(176, 38, 255, 0.05));
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .project-company {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            padding: 0.3rem 0.8rem;
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid rgba(0, 217, 255, 0.3);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--primary);
+        }
+
+        /* Skills Preview */
+        .skills-preview {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(0, 217, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .skill-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-title {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .skill-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-darker);
+            padding: 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(0, 217, 255, 0.1);
+            margin-top: 4rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-link {
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        footer p {
+            color: var(--text-muted);
+        }
+
+        /* Mobile menu toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .title {
+                font-size: 1.2rem;
+            }
+
+            .hero-stats {
+                gap: 1.5rem;
+            }
+
+            .projects-grid,
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(10, 14, 39, 0.98);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1rem;
+                transform: translateY(-100%);
+                opacity: 0;
+                pointer-events: none;
+                transition: all 0.3s ease;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+                opacity: 1;
+                pointer-events: all;
+            }
+
+            .hero {
+                padding-top: 5rem;
+            }
+
+            .hero-image {
+                width: 150px;
+                height: 150px;
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">{'< Dev />'}</div>
+            <div class="menu-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-image">
+                <img src="images/profile.jpg" alt="Vidhuram N">
+            </div>
+            <h1>Vidhuram N</h1>
+            <p class="title">Unity Developer | VR & Web Experience Specialist</p>
+            <p class="subtitle">Passionate about creating immersive VR experiences and interactive 3D applications. Specializing in training simulations, reusable frameworks, and optimized VR/Web solutions.</p>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-icon">🎮</div>
+                    <div class="stat-text">Unity & VR</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">🥽</div>
+                    <div class="stat-text">VR/XR Specialist</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">🌐</div>
+                    <div class="stat-text">WebXR</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">📍</div>
+                    <div class="stat-text">Bengaluru, India</div>
+                </div>
+            </div>
+
+            <div class="cta-buttons">
+                <a href="projects.html" class="btn btn-primary">View Projects</a>
+                <a href="resume/VIDHURAM-N.pdf" class="btn btn-secondary" download>Download Resume</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects -->
+    <section class="featured-projects">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-icon">🏥</div>
+                <div class="project-content">
+                    <h3 class="project-title">VR Training Simulations</h3>
+                    <p class="project-company">InfiVR • 2024-Present</p>
+                    <p class="project-description">Immersive VR and web-based training simulations for healthcare and industrial safety procedures with realistic physics-based interactions.</p>
+                    <div class="project-tags">
+                        <span class="tag">Unity</span>
+                        <span class="tag">VR</span>
+                        <span class="tag">OpenXR</span>
+                        <span class="tag">Physics</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon">🌐</div>
+                <div class="project-content">
+                    <h3 class="project-title">360° Experience Framework</h3>
+                    <p class="project-company">InfiVR • 2024</p>
+                    <p class="project-description">Reusable 360° experience framework for web deployment with modular architecture and WebGL optimization.</p>
+                    <div class="project-tags">
+                        <span class="tag">Unity</span>
+                        <span class="tag">WebXR</span>
+                        <span class="tag">WebGL</span>
+                        <span class="tag">Framework</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-icon">🏨</div>
+                <div class="project-content">
+                    <h3 class="project-title">VR Walkthroughs</h3>
+                    <p class="project-company">LifeVR • 2023-2024</p>
+                    <p class="project-description">Immersive VR walkthroughs for luxury hotels and industrial facilities with 20% performance improvement.</p>
+                    <div class="project-tags">
+                        <span class="tag">Unity</span>
+                        <span class="tag">VR</span>
+                        <span class="tag">Optimization</span>
+                        <span class="tag">OpenXR</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Preview -->
+    <section class="skills-preview">
+        <h2 class="section-title">Core Expertise</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-icon">🥽</div>
+                <h3 class="skill-title">VR/XR Development</h3>
+                <ul class="skill-list">
+                    <li>Oculus SDK & OpenXR</li>
+                    <li>SteamVR</li>
+                    <li>Physics-based Interactions</li>
+                    <li>VR Optimization</li>
+                </ul>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-icon">🌐</div>
+                <h3 class="skill-title">Web & Frameworks</h3>
+                <ul class="skill-list">
+                    <li>WebXR & WebGL</li>
+                    <li>360° Frameworks</li>
+                    <li>Performance Profiling</li>
+                    <li>Web Deployment</li>
+                </ul>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-icon">🎮</div>
+                <h3 class="skill-title">Game Development</h3>
+                <ul class="skill-list">
+                    <li>Unity Engine</li>
+                    <li>C# Programming</li>
+                    <li>Design Patterns</li>
+                    <li>Asset Management</li>
+                </ul>
+            </div>
+
+            <div class="skill-card">
+                <div class="skill-icon">☁️</div>
+                <h3 class="skill-title">Cloud & Testing</h3>
+                <ul class="skill-list">
+                    <li>Firebase & AWS</li>
+                    <li>Selenium Testing</li>
+                    <li>Azure Cloud QA</li>
+                    <li>Agile Methodology</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://github.com/nvidhuram" class="social-link" title="GitHub" target="_blank" rel="noopener noreferrer">⚡</a>
+            <a href="https://linkedin.com/in/nvidhuram" class="social-link" title="LinkedIn" target="_blank" rel="noopener noreferrer">💼</a>
+            <a href="https://www.instagram.com/n.vidhuram" class="social-link" title="Instagram" target="_blank" rel="noopener noreferrer">📷</a>
+            <a href="mailto:nvidhuram@gmail.com" class="social-link" title="Email">✉️</a>
+        </div>
+        <p>&copy; 2025 Vidhuram N - Unity & VR Developer. Crafted with passion in Bengaluru.</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(event) {
+            const nav = document.querySelector('nav');
+            const navLinks = document.getElementById('navLinks');
+            
+            if (!nav.contains(event.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
