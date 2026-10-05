@@ -1,2 +1,2 @@
 # nvidhuram.github.io
-Unity &amp; VR Developer Portfolio
+Unity & XR developer portfolio. Live at https://nvidhuram.github.io/
